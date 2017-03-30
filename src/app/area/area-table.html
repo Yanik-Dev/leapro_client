@@ -1,0 +1,31 @@
+<!-- area table -->
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Size in Area</th>
+            <th>Size in Volume</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody> 
+        <tr *ngFor="let area of areas; let i = index">
+           <td>
+                <div class="checkbox">
+                    <input id="checkbox--{{i}}" type="checkbox" [(ngModel)]="checkedItems[i]" (click)="onChecked(area)">
+                    <label for="checkbox--{{i}}"></label>
+                </div>
+            </td>
+            <td>{{area.name}}</td>
+            <td>{{area.length * area.width}}m2</td>
+            <td>{{area.length * area.width * area.height}}m3</td>
+            <td>
+                <a type="submit" class="btn btn-link btn-sm">
+                    <clr-icon shape="edit" size="16"></clr-icon>
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!-- /area table -->

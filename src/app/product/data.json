@@ -1,0 +1,53 @@
+[{
+    "id" : 0,
+    "name": "Droplets",
+    "description": "",
+    "unitCost": 100,
+    "sellingPrice": 100,
+    "discountType": "P",
+    "quantity": "400",
+    "dilution": "",
+    "application":"",
+    "unit": {
+        "id": 1,
+        "name": "",
+        "code": "",
+        "description":""
+    },
+    "discount": "30",
+    "taxType": "P",
+    "tax": "25",
+    "category": {
+        "id" : 1,
+        "name" : "Pest Control",
+        "description" : ""
+    }
+
+},
+{
+    "id" : 1,
+    "name": "Metatone",
+    "description": "",
+    "unitCost": 100,
+    "sellingPrice": 100,
+    "discountType": "P",
+    "quantity": "200",
+    "dilution": "",
+    "application":"",
+    "unit": {
+        "id": 1,
+        "name": "",
+        "code": "",
+        "description":""
+    },
+    "discount": "30",
+    "taxType": "P",
+    "tax": "25",
+    "category": {
+        "id" : 1,
+        "name" : "Pest Control",
+        "description" : ""
+    }
+
+}
+]

@@ -1,0 +1,36 @@
+<table class="table table-compact">
+    <thead>
+        <tr>
+            <th class="left">{{jobType}} Number</th>
+            <th>{{jobType}} Smummary</th>
+            <th>{{jobType}} Status</th>
+            <th>Date Made</th>
+            <th class="left">Date Completed</th>
+            <th class="left"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="left">12345</td>
+            <td>Nondisclosed countryside</td>
+            <td> - </td>
+            <td class="left">09/12/2016</td>
+            <td class="left">09/12/2016</td>
+            <td class="left" >
+                <clr-icon (click)="editEditClicked()" *ngIf="showEditColumn" shape="edit" class="is-highlight"></clr-icon>
+                <clr-icon (click)="editViewClicked()" *ngIf="showViewColumn" class="is-success" shape="caret right"></clr-icon>
+            </td>
+        </tr>
+        <tr>
+            <td class="left">12300</td>
+            <td>Nondisclosed countryside</td>
+            <td> - </td>
+            <td>01/07/2016</td>
+            <td class="left">02/07/2016</td>
+            <td class="left" >
+                <clr-icon (click)="editEditClicked()" *ngIf="showEditColumn" shape="edit" class="is-highlight"></clr-icon>
+                <clr-icon (click)="editViewClicked()" *ngIf="showViewColumn" class="is-success" shape="caret right"></clr-icon>
+            </td>
+        </tr>
+    </tbody>
+</table>

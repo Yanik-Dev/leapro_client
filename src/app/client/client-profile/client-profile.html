@@ -1,0 +1,161 @@
+<clr-alert [clrAlertType]="'alert-danger'">
+    <div class="alert-item">
+        <span class="alert-text">
+            Client has a pass due payment for job #0009
+        </span>
+        <div class="alert-action">
+        <clr-dropdown class="dropdown bottom-left">
+            <button class="nav-icon" clrDropdownToggle>
+                action
+                <clr-icon shape="caret down"></clr-icon>
+            </button>
+            <div class="dropdown-menu">
+                <a href="..." clrDropdownItem>Contact Client</a>
+            </div>
+        </clr-dropdown>
+    </div>
+    </div>
+</clr-alert>
+<div class="row">
+    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="card-block">
+                <div class="card-title">Client #0001</div>
+                <div class="card-media-block">
+                    <img src="../assets/img/profile_placeholder.jpg" class="card-media-image">
+                    <div class="card-media-description">
+                        <span class="card-media-title">
+                           John Doe
+                        </span>
+                        <span class="card-media-text">
+                           Commericial Client 
+                        </span>
+                    </div>
+                </div>
+                <div class="card-text">
+                    ...
+                </div>
+            </div>
+            <div class="card-footer">
+                <clr-dropdown class="dropdown bottom-right">
+                    <button class="nav-icon" clrDropdownToggle>
+                        More Options
+                        <clr-icon shape="caret down"></clr-icon>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="..." clrDropdownItem>View Job Orders</a>
+                        <a href="..." clrDropdownItem>Create Estimate</a>
+                        <a clrDropdownItem>Create Job Order</a>
+                    </div>
+              </clr-dropdown>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+         <clr-tabs>
+            <clr-tab-link [clrTabLinkId]="'link1'" [clrTabLinkActive]="true">Recent Activities</clr-tab-link>
+            <clr-tab-link>Schedule</clr-tab-link>
+
+            <clr-tab-content [clrTabContentId]="'content1'" [clrTabContentActive]="true">
+        
+            </clr-tab-content>
+        </clr-tabs>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-block">
+                <div class="card-title"></div>
+                <div class="card-media-block">
+                    <clr-tree-node [clrTreeNodeExpanded]="true">
+                            <b> Companies </b>
+                            <clr-tree-node (mouseleave)='show=false;' (mouseover)='show=true;' [clrTreeNodeExpanded]="true">
+                               <a> KFC </a>  <a href="" *ngIf="show" ><clr-icon shape="edit"></clr-icon></a>
+                                <clr-tree-node>
+                                   <b> Branches </b> 
+                                     <a href="" ><clr-icon shape="add"></clr-icon></a>
+                                    <clr-tree-node>
+                                       <a class="clr-treenode-link"> Kingston Branch </a>
+                                        <clr-tree-node>
+                                            <b> Areas </b>
+                                            <clr-tree-node>Kitchen</clr-tree-node>
+                                            <clr-tree-node>Parking Lot</clr-tree-node>
+                                        </clr-tree-node>
+                                        
+                                    </clr-tree-node>
+                                    
+                                </clr-tree-node>
+                        
+                            </clr-tree-node>
+                        </clr-tree-node>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-block">
+                <div class="card-title"></div>
+                <div class="card-media-block">
+                    <clr-tabs>
+                        <clr-tab-link [clrTabLinkId]="'link1'" [clrTabLinkActive]="true">Recent Jobs</clr-tab-link>
+                        <clr-tab-link>Non Progressive Estimates</clr-tab-link>
+                        <clr-tab-link>Contacts</clr-tab-link>
+
+                        <clr-tab-content [clrTabContentId]="'content1'" [clrTabContentActive]="true">
+                            <p>The table below shows the top 10 most recently completed jobs for the client</p>
+                            <table class="table table-compact">
+                                <thead>
+                                    <tr>
+                                        <th class="left">Job Number</th>
+                                        <th>Job Smummary</th>
+                                        <th>Date Made</th>
+                                        <th class="left">Date Completed</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="left">12345</td>
+                                        <td>Nondisclosed countryside</td>
+                                        <td>/09/09/2016</td>
+                                        <td class="left">09/12/2016</td>
+                                    </tr>
+                                <tr>
+                                        <td class="left">12300</td>
+                                        <td>Nondisclosed countryside</td>
+                                        <td>/01/07/2016</td>
+                                        <td class="left">02/07/2016</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </clr-tab-content>
+                        <clr-tab-content>
+                            <p>Content for Management tab.</p>
+                        </clr-tab-content>
+                        <clr-tab-content>
+                            <table class="table table-compact table-noborder">
+                                <thead>
+                                    <tr>
+                                        <th class="left">Monster</th>
+                                        <th>Home</th>
+                                        <th>Likes Cookies</th>
+                                        <th class="left">Fun to Play With</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="left">Wolfman</td>
+                                        <td>Nondisclosed countryside</td>
+                                        <td>Sometimes</td>
+                                        <td class="left">Not really</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </clr-tab-content>
+                    </clr-tabs>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

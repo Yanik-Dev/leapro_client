@@ -1,0 +1,22 @@
+<div class="login-wrapper">
+    <form class="login" [formGroup]="loginForm">
+        <label class="title">
+                      Leapro<span class="trademark">&#8482;</span>
+                      CRM&#174;
+        </label>
+        <div class="login-group">
+            <input class="username" type="text" id="login_username" formControlName="username" placeholder="Username">
+            <input class="password" type="password" id="login_password" formControlName="password" placeholder="Password">
+            <div class="checkbox">
+                <input type="checkbox" id="rememberme">
+                <label for="rememberme">
+                              Remember me
+                </label>
+            </div>
+            <div class="error active" *ngIf="error.status == 'user non-existent' || error.status == 'incorrect password'">
+                Invalid user name or password
+            </div>
+            <button  class="btn btn-primary" (click)="submit()">LOG IN</button>
+        </div>
+    </form>
+</div>

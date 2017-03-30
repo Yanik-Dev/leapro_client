@@ -1,0 +1,87 @@
+<clr-modal [(clrModalOpen)]="opened">
+          <h3 class="modal-title">I have a nice title</h3>
+          <div class="modal-body">
+              
+   <button class="btn btn-primary" (click)="opened2 = true">Show modal</button>
+
+               <div class="row">
+        <nav>
+            <div class="nav-wrapper deep-orange lighten-1">
+                <form>
+                    <div class="input-field">
+                    <input id="search" type="search" required>
+                    <label for="search"><i class="material-icons">search</i></label>
+                    <i class="material-icons">close</i>
+                    </div>
+                </form>
+            </div>
+        </nav>
+    </div>
+    <table class="stripe" style="margin-bottom:10px;">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Street</th>
+                <th>City</th>
+                <th>Provicne</th>
+                <th><a class="waves-effect waves-teal btn-flat" (click)="addressDialogOpened = true"><i class="material-icons">add</i></a></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let address of addressList; let i = index">
+                <td>
+                  <p>
+                    <input type="checkbox" id="select-{{i}}"/>
+                    <label for="select-{{i}}"></label>
+                  </p>
+                </td>
+                <td>{{address.street}}</td>
+                <td>{{address.city}}</td>
+                <td>{{address.province}}</td>
+                <td>
+                    <a  class="waves-effect waves-teal btn-flat" 
+                        (click)="addressDialogOpened=true; selectAddress(address)">
+                        <i class="material-icons">edit</i>
+                    </a>
+                </td>
+                <td>
+                    <a  class="waves-effect waves-teal btn-flat" 
+                        (click)="addressDetailsDialogOpened=true; selectAddress(address)">
+                             <i class="material-icons">visibility</i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="right-align">
+            <button class="btn waves-effect waves-light" type="button" (click)="finished()">
+                Save
+            </button>
+            <button class="btn waves-effect waves-light amber" type="button">
+                Unselect All
+            </button>
+        </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-outline" (click)="opened = false">Cancel</button>
+              <button type="button" class="btn btn-primary" (click)="opened = false">Ok</button>
+          </div>
+      </clr-modal>
+   
+
+
+<!-- location-form component-->
+<location-form [opened]="addressDialogOpened" 
+               [addressToUpdate]="selectedAddress"
+               (onAddressAdded)="addressAdded($event)" 
+               (onDialogClosed)="locationFormDialogClosed($event)">
+</location-form>
+<!-- /location-form- -->
+
+
+<!-- location-details component-->
+<location-details [opened]="addressDetailsDialogOpened" [address]="selectedAddress"
+               (onDialogClosed)="detailsFormDialogClosed($event)">
+</location-details>
+<!-- /location-details- -->

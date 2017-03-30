@@ -1,0 +1,31 @@
+<style>
+.system-content{
+    max-width: 550px;
+}
+.btn-panel{
+    width: 150px;
+    height: 150px;
+    margin-bottom: 8px;
+}
+</style>
+<header class="header-4">      
+    <div class="header-nav">
+        <a routerLink="/app/system/system-configuration" routerLinkActive="active" class="nav-link ">
+            <span class="nav-text">
+                   System Management
+            </span>
+        </a>
+        <a routerLink="/app/system/user-management" routerLinkActive="active" class="nav-link">
+            <span class="nav-text">
+                    User Management
+            </span>
+        </a>
+        <a routerLink="/app/system/account-settings" routerLinkActive="active" class="nav-link">
+            <span class="nav-text">
+                   Account Settings
+            </span>
+        </a>
+    </div>
+</header>
+        
+<router-outlet></router-outlet>

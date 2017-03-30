@@ -1,0 +1,128 @@
+<style>
+    .form-group{
+        padding-left:200px !important;
+        margin-right: 20px;
+    }
+</style>
+
+<clr-modal [(clrModalOpen)]="opened" [clrModalSize]="'xl'" [clrModalClosable]="false">
+    <h3 class="modal-title">Product </h3>
+    <div class="modal-body"> 
+        <clr-alert [clrAlertType]="'alert-danger'" [clrAlertClosable]="false" [clrAlertSizeSmall]="true" *ngIf="error.isTrue">
+        <div class="alert-item">
+            <span class="alert-text">
+                {{error.message}}
+            </span>
+        </div>
+        </clr-alert>
+    <form [formGroup]="productForm" class="compact row">
+    <section class="form-block col-sm-6">
+         <div class="form-group">
+             <label for="name">Product Name</label>
+             <input id="name"  type="text" formControlName="name">
+            <span class="not-valid" *ngIf="productForm.controls['name'].hasError('required') && (productForm.controls['name'].dirty || productForm.controls['name'].touched)">Required field </span>
+            <span class="not-valid" *ngIf="productForm.controls['name'].hasError('maxlength') && (productForm.controls['name'].dirty || productForm.controls['name'].touched)">Cannot exceed 20 letters </span>
+        </div>
+        <div class="form-group">
+            <label for="details">Category</label>
+              <div class="select" >
+                    <select formControlName="fk_category_id">
+                        <option disabled selected>Choose category</option>
+                    </select>
+                </div>
+            <span class="not-valid" *ngIf="productForm.controls['fk_category_id'].hasError('required') && (productForm.controls['fk_category_id'].dirty || productForm.controls['fk_category_id'].touched)">Required field </span>
+        </div>
+        <div class="form-group">
+            <label for="details">Unit</label>
+            <div class="select" >
+                <select formControlName="fk_unit_id">
+                    <option  disabled selected>Choose category</option>
+                </select>
+            </div>            
+             <span class="not-valid" *ngIf="productForm.controls['fk_unit_id'].hasError('required') && (productForm.controls['fk_unit_id'].dirty || productForm.controls['fk_unit_id'].touched)">Required field </span>
+        </div>
+        <div class="form-group">
+            <label for="">Application</label>
+                 <input id=""  type="text" formControlName="application">
+            <span class="not-valid" *ngIf="productForm.controls['application'].hasError('maxlength') && (productForm.controls['application'].dirty || productForm.controls['application'].touched)">Cannot exceed 20 letters </span>
+        </div>
+        <div class="form-group">
+            <label for="">Dilution</label>
+                 <input id=""  type="text" formControlName="dilution">
+            <span class="not-valid" *ngIf="productForm.controls['dilution'].hasError('maxlength') && (productForm.controls['dilution'].dirty || productForm.controls['dilution'].touched)">Cannot exceed 20 letters </span>    
+        </div>
+         <div class="form-group">
+            <label for="formFields_8">Description</label>
+            <textarea id="formFields_8" rows="2" fromControlName="description"></textarea>
+        </div>
+    </section>
+    <section class="form-block  col-sm-6">
+        <div class="form-group">
+            <label for="details">Usage Measurement</label>
+            <div class="select" >
+                <select formControlName="usage_type">
+                    <option  disabled selected>Choose Usage Unit</option>
+                    <option value="Area">Area</option>
+                    <option value="Volume">Choose Usage Unit</option>
+                </select>
+            </div>            
+             <span class="not-valid" *ngIf="productForm.controls['usage_type'].hasError('required') && (productForm.controls['usage_type'].dirty || productForm.controls['usage_type'].touched)">Required field </span>
+        </div>
+        <div class="form-group">
+            <label for="">Unit Cost</label>
+               <input id=""  type="number" min="1" formControlName="unit_cost">
+            <span class="not-valid" *ngIf="productForm.controls['unit_cost'].hasError('required') && (productForm.controls['unit_cost'].dirty || productForm.controls['unit_cost'].touched)">This field is required</span>
+        </div>
+        <div class="form-group">
+            <label for="">Selling Cost</label>
+             <input id=""  type="number" min="1" formControlName="selling_cost">
+            <span class="not-valid" *ngIf="productForm.controls['selling_cost'].hasError('required') && (productForm.controls['selling_cost'].dirty || productForm.controls['selling_cost'].touched)">This field is required</span>
+        </div>
+        <div class="form-group">
+            <label for="details">Tax Type</label>
+            <div class="select">
+            <select formControlName="tax_type" #taxType>
+              <option value="0" selected>None</option>
+              <option value="P">Percentage</option>
+              <option value="F">Fixed Amount</option>
+           </select>
+            </div>
+        </div>
+        <div class="form-group" *ngIf="taxType.value!=0">
+            <label for="">Tax {{(taxType.value=="P")?' (%)':' (fixed)'}} </label>
+            <input id=""  type="number"formControlName="tax">
+        </div>
+         <div class="form-group">
+            <label for="details">Discount Type</label>
+            <div class="select">
+            <select formControlName="discount_type" #discountType>
+              <option value="0" selected>None</option>
+              <option value="P">Percentage</option>
+              <option value="F">Fixed Amount</option>
+           </select>
+            </div>
+        </div>
+        <div class="form-group" *ngIf="discountType.value!=0">
+            <label for="">Discount{{(discountType.value=="P")?' (%)':' (fixed)'}}</label>
+            <input id=""  type="number" formControlName="discount">
+        </div>
+        
+       <ul class="list-unstyled">
+            <li>Sub-Total: $ {{calculateSubTotal()}} </li>
+            <li>Discount: $ {{calculateDiscountedAmount()}}</li>
+            <li>Tax: $ {{calculateTaxAmount()}}</li>
+            <li>Total: $ {{calculateTaxAmount() + (calculateSubTotal() - calculateDiscountedAmount()) }}</li>
+        </ul>
+    </section>
+</form>
+
+        </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-link" (click)="save()">
+            Add
+        </button>        
+        <button type="button" class="btn btn-danger" (click)="close()">
+            Close
+        </button>
+    </div>
+</clr-modal>

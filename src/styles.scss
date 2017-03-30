@@ -1,0 +1,26 @@
+
+*:focus {outline:none !important}
+
+ //Spinner styles
+div.horizontal {
+    display: flex;
+    justify-content: center;
+}
+
+div.vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+div.loader-container{
+  width:100%;
+  height:500px;
+}
+
+
+.not-valid{
+    color: red;
+    margin-top: -6px;
+    display: block;
+    width:100%;
+}

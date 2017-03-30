@@ -1,0 +1,80 @@
+<button class="btn btn-primary" (click)="opened = true;">Compose</button>
+<hr>
+<div class="row">
+    <div class="col-xs-12 col-sm-5">
+        <div class="card">
+            <div class="card-block">
+                <div class="progress top">
+                    <progress value="99" max="100"></progress>
+                </div>
+                <h4 class="card-title">Card title</h4>
+                <p class="card-text">Here is a progress bar at the very top of a card.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block">
+                <div class="progress danger top">
+                    <progress value="99" max="100"></progress>
+                </div>
+                <h4 class="card-title">Card title</h4>
+                <p class="card-text">Here is a progress bar at the very top of a card.</p>
+            </div>
+       </div>
+    </div>
+</div>
+
+<clr-modal [(clrModalOpen)]="opened" [clrModalClosable]="false" [clrModalSize]="'lg'">
+    <h3 class="modal-title">Compose new email</h3>
+    <div class="modal-body">
+         <form class="form-horizontal" (ngSubmit)="sendMail()" [formGroup]="createForm">
+            <div class="form-group" [ngClass]="{'has-error': !to.valid && !to.pristine}">
+                <label for="newMailTo" class="col-sm-2 control-label">To</label>
+                <input
+                    type="text"
+                    id="newMailTo"
+                    placeholder="To"
+                    class="col-xs-10 to form-control"
+                    [formControl]="to"
+                    #toField
+                >
+                <div class="help-block pull-right" *ngIf="!to.pristine && to.hasError('invalidEmail')">You entered invalid e-mail.</div>
+            </div>
+            <div class="form-group">
+                <label for="newMailCc" class="col-sm-2 control-label">Cc</label>
+                <input
+                    type="text"
+                    id="newMailCc"
+                    placeholder="Cc"
+                    class="col-xs-10 cc form-control"
+                    [formControl]="createForm.controls['cc']"
+                >
+            </div>
+            <div class="form-group">
+                <label for="newMailSubject" class="col-sm-2 control-label">Subject</label>
+                <input
+                    type="text"
+                    id="newMailSubject"
+                    placeholder="Subject"
+                    class="col-xs-10 subject form-control input-lg"
+                    [formControl]="createForm.controls['subject']"
+                >
+            </div>
+            <div class="form-group">
+                <label for="newMailBody" class="col-sm-2 control-label">Message</label>
+                <textarea
+                    rows="5"
+                    id="newMailBody"
+                    placeholder="Body"
+                    class="col-xs-10 body form-control"
+                    [formControl]="createForm.controls['message']">
+                </textarea>
+            </div>
+            
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" [disabled]="!createForm.valid" class="btn btn-success">Send</button>
+        <button type="submit" class="btn btn-danger">Discard</button>
+        <button type="submit" class="btn btn-default">Save and Close</button>          
+    </div>
+</clr-modal>

@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "name": "Multi-Purpose Area",
+        "description": "",
+        "length": 300,
+        "height": 200,
+        "depth": 200,
+        "width": 200
+    },
+    {
+        "id": 1,
+        "name": "Kitchen",
+        "description": "",
+        "length": 100,
+        "height": 80,
+        "depth": 20,
+        "width": 80
+    },
+    {
+        "id": 1,
+        "name": "Bathroom",
+        "description": "",
+        "length": 80,
+        "height": 90,
+        "depth": 20,
+        "width": 40
+    }
+       
+]

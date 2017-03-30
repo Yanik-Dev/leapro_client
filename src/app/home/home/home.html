@@ -1,0 +1,90 @@
+<clr-main-container>
+    <!-- app alert -->
+    <div class="alert alert-app-level alert-info" *ngIf="show">
+        <button type="button" class="close" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+        <div class="alert-item">
+            <div class="alert-text">
+                Welcome! You have 0 Notifications
+            </div>
+            <div class="alert-actions">
+                <button class="btn alert-action">Continue</button>
+            </div>
+        </div>
+    </div>
+    <!-- /app alert -->
+
+    <!-- top nav -->
+    <clr-header>
+            <div class="branding">
+                <a href="..." class="nav-link">
+                    <span class="title">Leapro</span>
+                </a>
+            </div>
+            <div class="header-nav">
+                <a class="nav-link nav-icon" routerLink="/app/notification" routerLinkActive="active">
+                    <clr-icon shape="notification"></clr-icon>
+                </a>
+                <a routerLink="/app/event-calendar" routerLinkActive="active" class="nav-link nav-icon">
+                    <clr-icon shape="calendar"></clr-icon>
+                </a>
+                
+                <a routerLink="/app/gmail" routerLinkActive="active" class="nav-link nav-icon">
+                    <clr-icon shape="email"></clr-icon>
+                </a>
+            </div>
+            <div class="header-actions">
+                <clr-dropdown class="dropdown bottom-right">
+                    <button class="nav-icon" clrDropdownToggle>
+                        <clr-icon shape="user"></clr-icon>
+                        <clr-icon shape="caret down"></clr-icon>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="..." clrDropdownItem>About</a>
+                        <a href="..." clrDropdownItem>Preferences</a>
+                        <a clrDropdownItem>Log out</a>
+                    </div>
+                </clr-dropdown>
+            </div>
+    </clr-header>
+    <!-- /top nav -->
+
+    <div class="content-container">
+        <!--main content -->
+        <div class="content-area">
+            <router-outlet></router-outlet>
+        </div>
+        <!-- /main-content -->
+
+        <!-- side nav -->
+        <nav class="sidenav" [clr-nav-level]="1">
+            <section class="sidenav-content">
+                <section class="nav-group">
+                    <ul class="nav-list">
+                        <li>
+                            <a class="nav-link" routerLink="/app/content" routerLinkActive="active-link">
+                                <clr-icon shape="line-chart" size="24"></clr-icon> Home</a>
+                        </li>
+                        <li>
+                            
+                        </li>
+                        <li>
+                            <a class="nav-link" routerLink="/app/client" routerLinkActive="active-link">
+                                <clr-icon shape="user" size="24"></clr-icon> Clients</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" routerLink="/app/job/view" routerLinkActive="active-link">
+                                <clr-icon shape="file" size="24"></clr-icon> Jobs</a>
+                        </li>
+                         <li>
+                            <a class="nav-link" routerLink="/app/system" routerLinkActive="active-link" >
+                                <clr-icon shape="cog" size="24"></clr-icon> System </a>
+                        </li>
+                    </ul>
+                </section>
+            </section>
+        </nav>
+        <!-- /side nav -->
+    </div>
+</clr-main-container>

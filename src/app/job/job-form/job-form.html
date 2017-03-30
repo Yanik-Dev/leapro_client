@@ -1,0 +1,273 @@
+<style>
+    .form-group{
+        padding-left:200px !important;
+        margin-right: 20px;
+    }
+   .modal-body{
+       overflow: hidden !important;
+       overflow-y:auto !important;
+   }
+</style>
+<a class="btn btn-primary" routerLink="/app/job/view">
+    <clr-icon shape="angle" size="20" dir="left"></clr-icon> Back
+</a>
+<form [formGroup]="jobOrderForm" class="row">
+    <!-- job-order details -->
+    <div class="card">
+        <div class="card-header">
+           <clr-icon shape="list" size="32"></clr-icon> Details
+        </div>
+      <div class="card-block">
+         <div class="card-title">Client #0001 - Yanik Blake</div>
+           <div class="row">
+                <section class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label for="details">Company</label>
+                        <div class="select">
+                            <select >
+                                <option value="" disabled selected>Choose Location</option>
+                            </select>
+                        </div>
+                    </div>
+                 </section>
+                 <section class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label for="details">Branch</label>
+                        <div class="select">
+                            <select >
+                                <option value="" disabled selected>Choose Location</option>
+                            </select>
+                        </div>
+                    </div>
+                 </section>
+                <section class="form-block col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                            <label for="formFields_8">Summary</label>
+                            <textarea id="formFields_8" rows="2"></textarea>
+                        </div>
+                </section>
+                <section class="form-block  col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label for="">Days Before expiration</label>
+                        <input id=""  type="number" placeholder="">
+                    </div>
+                </section>
+             </div>
+        </div>
+     </div>
+    <!-- /job-order details -->
+
+     <div class="card">
+        <div class="card-header">
+           <clr-icon shape="bars" size="32"></clr-icon> Charges
+        </div>
+        <div class="card-block">
+                <!-- charges table -->
+                <table class="table" style="margin-top: 0px">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Discription</th>
+                            <th>Cost</th>
+                            <th>Quantity</th>
+                            <th>Discount</th>
+                            <th>Tax</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let charge of charges">
+                            <td>
+                                <clr-icon (click)="removeCharge(charge);"shape="close" class="is-error" size="16"></clr-icon>
+                            </td>
+                            <td>{{charge.name}}</td>
+                            <td>{{charge.description}}</td>
+                            <td>{{charge.cost}}</td>
+                            <td>{{charge.quantity}}</td>
+                            <td>{{charge.discount}}</td>
+                            <td>{{charge.tax}}</td>
+                            <td>{{charge.total}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- /charges table -->
+                <br>
+                <!-- charges-summary -->
+                <ul class="list-unstyled">
+                    <li>Sub-Total: $ {{calculateSubTotal()}}</li>
+                    <li>Total Discount: $ {{calculateDiscountedAmount()}}</li>
+                    <li>Total Tax: $ {{calculateTaxAmount()}}</li>
+                    <li>Total: $ {{ calculateSubTotal() + calculateTaxAmount() - calculateDiscountedAmount()}}</li>
+                </ul>
+                <!-- /charges-summary -->
+           </div>
+            <div class="card-footer">
+            <!-- action-buttons -->
+                <a class="btn btn-sm btn-link" (click)="serviceListOpened=!opened">
+                     Add Service
+                </a>
+                <button type="submit" class="btn btn-sm btn-link" (click)="productListOpened=true">
+                    Add Product
+                </button>
+            <!-- /action-buttons -->
+            </div>
+     </div>
+
+    
+    <div class="card">
+        <div class="card-header">
+            <clr-icon shape="note" size="32"></clr-icon> Notes
+        </div>
+        <div class="card-block">
+            <!-- notes -->
+            <div class="row flex-items-sm-center">
+                <div class=" col-sm-4">
+                        <label for="formFields_8">Client Notes</label>
+                        <textarea id="formFields_8" rows="2"></textarea>
+                </div>
+                <div class=" col-sm-4">
+                        <label for="formFields_8">Private Notes</label>
+                        <textarea id="formFields_8" rows="2"></textarea>
+                </div>
+                <div class=" col-sm-4">
+                        <label for="formFields_8">Technician Notes</label>
+                        <textarea id="formFields_8" rows="2"></textarea>
+                </div>
+            </div>
+            <!-- /notes -->
+        </div>
+        <div class="card-footer">
+            <!-- form-buttons -->
+            <div class="float-right">
+                <button class="btn btn-primary" (click)="submit()">Create</button>
+                <button class="btn btn-warning-outline" (click)="reset()">Clear</button>
+            </div>
+            <!-- /form-buttons -->
+        </div>
+    </div>
+</form>
+
+<clr-modal [(clrModalOpen)]="serviceListOpened" [clrModalSize]="'xl'" [clrModalClosable]="false">
+    <h3 class="modal-title">Service list</h3>
+    <div class="modal-body">
+       
+        <search-filter [searchBarPlaceholder]="'Search Services'"
+                        [optionPlaceholder]="'Select Category'" 
+                        [buttonTitle]="'New'"
+                        (buttonClickHandler)="servieFormOpened=true"></search-filter>
+    
+
+        <service-table (editClickedHandler)="service = $event; servieFormOpened=true" #serviceTable></service-table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-link" (click)="serviceTable.unchecked();addServiceCharges(serviceTable.checkedRecords);
+          serviceListOpened = false">
+            Add
+        </button>        
+        <button type="button" class="btn btn-danger" (click)="serviceTable.unchecked();serviceListOpened = false">
+            Close
+        </button>
+    </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="servieFormOpened" [clrModalSize]="'xl'" [clrModalClosable]="false">
+    <h3 class="modal-title">Service Details</h3>
+    <div class="modal-body">
+        <service-form [service]="service" #serviceForm></service-form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-link" (click)="servieFormOpened = false">
+            Add
+        </button>        
+        <button type="button" class="btn btn-danger" (click)="servieFormOpened = false; serviceForm.reset()">
+            Close
+        </button>
+    </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="productListOpened" [clrModalSize]="'xl'" [clrModalClosable]="false">
+    <h3 class="modal-title">Product List</h3>
+    <div class="modal-body">
+        <search-filter [searchBarPlaceholder]="'Search Products'"
+                        [optionPlaceholder]="'Select Category'" 
+                        [buttonTitle]="'New'"
+                        (buttonClickHandler)="productFromOpened=true"></search-filter>
+        <product-area-table #productTable 
+                            (onEditClicked)="product = $event; productFromOpened=true"
+                            (onAddAreaClicked)="setSelectedProduct($event);areaModalOpened = true; "
+                            (onAddQuantityClicked)="setSelectedProduct($event);quantityModalOpened = true; "></product-area-table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-link" (click)="addProductCharges(productTable.checkedRecords); 
+            productTable.unchecked(); productListOpened = false;">
+            Add
+        </button>        
+        <button type="button" class="btn btn-danger" (click)="productListOpened = false; productTable.unchecked()">
+            Close
+        </button>
+    </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="quantityModalOpened" [clrModalSize]="'sm'" [clrModalClosable]="false">
+    <h3 class="modal-title">Quantity </h3>
+    <div class="modal-body">
+        <free-input type="'number'" #fInput></free-input>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-link" (click)="productTable.setProduct(setSelectedProductQuantity(fInput.value)); fInput.value =''; quantityModalOpened = false">
+            Add
+        </button>        
+        <button type="button" class="btn btn-danger" (click)="quantityModalOpened = false; fInput.value ='';">
+            Close
+        </button>
+    </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="areaModalOpened" [clrModalSize]="'l'" [clrModalClosable]="false">
+    <h3 class="modal-title">Area </h3>
+    <div class="modal-body">
+        <area-table #areaTable></area-table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-link" (click)="productTable.setProduct(setSelectedProductArea(areaTable.checkedAreas));
+          areaTable.unchecked(); areaModalOpened = false;">
+            Add
+        </button>        
+        <button type="button" class="btn btn-danger" (click)="areaModalOpened = false; areaTable.unchecked();">
+            Close
+        </button>
+    </div>
+</clr-modal>
+
+
+<clr-modal [(clrModalOpen)]="productFromOpened" [clrModalSize]="'xl'" [clrModalClosable]="false">
+    <h3 class="modal-title">Product </h3>
+    <div class="modal-body">
+        <product-form [product]="product"(onAddUnitButtonCliked)="openedunitFormOpened = true"></product-form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-link" (click)="productFromOpened = false">
+            Add
+        </button>        
+        <button type="button" class="btn btn-danger" (click)="productFromOpened = false;">
+            Close
+        </button>
+    </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="unitFormOpened" [clrModalSize]="'l'" [clrModalClosable]="false">
+    <h3 class="modal-title">New Unit</h3>
+    <div class="modal-body">
+        <unit-form  #unitForm></unit-form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-link" (click)="unitFormOpened = false">
+            Add
+        </button>        
+        <button type="button" class="btn btn-danger" (click)="unitFormOpened = false; unitForm.reset()">
+            Close
+        </button>
+    </div>
+</clr-modal>
+

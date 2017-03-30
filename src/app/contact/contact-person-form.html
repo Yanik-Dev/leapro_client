@@ -1,0 +1,32 @@
+<form [formGroup]="contactForm" novalidate class="col s12">
+    <section>
+        <div class="form-group">
+            <label>Use client as primary contact</label>
+            <div class="checkbox">
+                <input type="checkbox" id="checkrads_1" #check>
+                <label for="checkrads_1"></label>
+            </div>
+        </div>
+        <div class="form-group" *ngIf="!check.checked">
+            <label>Contact Person</label>
+            <input type="text"  formControlName="contact_person" formControlName="telephone" class="validate">
+        </div>
+        <div class="form-group">
+            <label>Telephone</label>
+            <input type="text" formControlName="telephone" class="validate">
+        </div>
+        <div class="form-group">
+            <label>Mobile</label>
+            <input type="text" formControlName="mobile" class="validate">
+        </div>
+        <div class="form-group">
+            <label>Fax</label>
+            <input type="text" formControlName="fax" class="validate">
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="text" formControlName="email" class="validate">
+        </div>
+    </section>
+</form>

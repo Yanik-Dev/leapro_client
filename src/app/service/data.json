@@ -1,0 +1,35 @@
+    [{
+        "id" : 1,
+        "name": "Misting",
+        "description": "",
+        "manHours": 2,
+        "unitCharge": 3000,
+        "discountType": "P",
+        "discount": "30",
+        "taxType": "P",
+        "tax": "25",
+        "category": {
+            "id" : 1,
+            "name" : "Pest Control",
+           "description" : ""
+        }
+    
+    },
+    {
+        "id" : 2,
+        "name": "Fogging",
+        "description": "",
+        "manHours": 1,
+        "unitCharge": 2500,
+        "discountType": "P",
+        "discount": "30",
+        "taxType": "P",
+        "tax": "25",
+        "category": {
+            "id" : 1,
+            "name" : "Pest Control",
+           "description" : ""
+        }
+    
+    }
+    ]

@@ -1,0 +1,56 @@
+
+<a class="btn btn-primary" routerLink="/app/client/home">
+    <clr-icon shape="angle" size="20" dir="left"></clr-icon> Back
+</a>
+    <!-- client details -->
+    <div class="card">
+        <div class="card-header">
+            <clr-icon shape="user" size="32" ></clr-icon> Client Details
+        </div>
+      <div class="card-block">
+         <div class="card-title"></div>
+            <client-form #client (onClientTypeSelected)="clientType = $event"></client-form>
+        </div>
+     </div>
+
+     <div class="card" *ngIf="clientType =='R'" >
+        <div class="card-header">Address Details</div>
+        <div class="card-block">
+                <location-form #location></location-form>
+        </div>
+    </div>
+    <!-- /client details -->
+
+    <!-- company details -->
+    <div class="card" *ngIf="clientType =='C'">
+        <div class="card-header">
+            <clr-icon shape="building" size="32" ></clr-icon> Company & Branch Details
+        </div>
+      <div class="card-block">
+         <div class="card-title"></div>
+             <client-company-form #company></client-company-form>
+        </div>
+     </div>
+    <!-- /company details -->
+    <!-- company details -->
+    <div class="card">
+        <div class="card-header">
+           <clr-icon shape="email" size="32" ></clr-icon> Contact Information
+        </div>
+      <div class="card-block">
+         <div class="card-title"></div>
+              <contact-person-form #contact></contact-person-form>
+        </div>
+     </div>
+    <!-- /company details -->
+
+    <button class="btn btn-primary" (click)="openWizard = !openWizard">
+    <clr-icon shape="check" size="20"></clr-icon> Save
+    </button>
+    <button class="btn btn" (click)="openWizard = !openWizard">
+    <clr-icon shape="remove" size="20"></clr-icon> Clear
+    </button>
+    <button class="btn btn-danger" (click)="openWizard = !openWizard">
+    <clr-icon shape="cancel" size="20"></clr-icon> Cancel
+    </button>
+ 

@@ -1,0 +1,31 @@
+<clr-datagrid (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading">
+    <clr-dg-column>Client ID</clr-dg-column>
+    <clr-dg-column [clrDgField]="'first_name'">Name</clr-dg-column>
+    <clr-dg-column [clrDgField]="'details'">Details</clr-dg-column>
+    <clr-dg-column ></clr-dg-column>
+     <clr-dg-placeholder>We couldn't find any users!</clr-dg-placeholder>
+    <clr-dg-row *ngFor="let client of clients">
+        <clr-dg-cell>{{client.id}}</clr-dg-cell>
+        <clr-dg-cell>{{client.first_name}}</clr-dg-cell>
+        <clr-dg-cell>{{client.details}}</clr-dg-cell>
+        <clr-dg-cell>
+            <clr-dropdown [clrMenuPosition]="'bottom-right'" [clrCloseMenuOnItemClick]="false">
+                <button clrDropdownToggle>
+                    <clr-icon shape="edit" size="24"></clr-icon>
+                    <clr-icon shape="caret down"></clr-icon>
+                </button>
+                <div class="dropdown-menu">
+                    <label class="dropdown-header">Options</label>
+                    <a clrDropdownItem routerLink="/app/client/profile/{{client.id}}">
+                        <clr-icon shape="file" size="16"></clr-icon>View</a>
+                    <a clrDropdownItem>
+                        <clr-icon shape="edit" size="16"></clr-icon>Edit</a>
+                </div>
+            </clr-dropdown>
+        </clr-dg-cell>
+    </clr-dg-row>
+    <clr-dg-footer>
+        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{total}} clients
+        <clr-dg-pagination #pagination [clrDgTotalItems]="total" [clrDgPageSize]="2"></clr-dg-pagination>
+    </clr-dg-footer>
+</clr-datagrid>

@@ -1,0 +1,32 @@
+<style>
+.image-upload{
+  margin-top: -50px;
+  
+}
+.image-upload img{
+  margin-left: 25px;
+  cursor: pointer;
+}
+.image-upload > input
+{
+    display: none;
+}
+</style>
+      <div class="form-group" style="margin-top: 15px">
+        <img src="{{preview}}" width="70px" height="70px">
+        <div class="image-upload">
+          <label for="file-input">
+            <img src="../assets/img/photo_icon.png"  width="20px" height="20px" alt="">
+         </label>
+
+          <input id="file-input" type="file" name="upload" class="filestyle" (change)="onFileSelected($event)">
+
+        </div>
+      </div>
+    <form [formGroup]="companyForm" class="compact" style="padding:0px">
+          <label for="first_name">Company Name</label>
+          <input id="first_name" formControlName="name" type="text" placeholder="first name">
+       
+          <label for="details">Established Date</label>
+          <input type="date" formControlName="establishedDate" style="border-top:0px; border-left: 0; border-right: 0px;">
+    </form>

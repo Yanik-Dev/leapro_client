@@ -1,0 +1,50 @@
+<br>
+ <div class="card">
+    <div class="card-header">
+        Tally
+    </div>
+    <div class="card-block">
+      <div class="card-title"></div>
+        <div class="row">
+            <div class="col-md-3">
+                <circle [value]="10" [pieSize]="'p10'"> </circle>
+            </div>
+            <div class="col-md-3">
+                <circle [value]="20" [colorClass]="'green'" [pieSize]="'p20'"> </circle>
+            </div>
+            <div class="col-md-3">
+                <circle [value]="30" [colorClass]="'orange'" [pieSize]="'p30'"> </circle>
+            </div>
+            <div class="col-md-3">
+                <circle [value]="40" [colorClass]="'dark green'" [pieSize]="'p40'"> </circle>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        Charts
+    </div>
+    <div class="card-block">
+      <div class="card-title"></div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="chart-block">
+                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+                        [chartType]="barChartType"></canvas>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="chart-block">
+                    <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"></canvas>
+                </div>
+            </div>
+             <div class="col-md-4">
+                <div class="chart-block">
+                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+                        [chartType]="barChartType"></canvas>
+                </div>
+            </div>
+        </div>    
+   </div>
+</div>

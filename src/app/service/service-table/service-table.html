@@ -1,0 +1,41 @@
+<!-- service table -->
+<table class="table">
+    <thead>
+        <tr>
+            <th *ngIf="showCheckboxes"></th>
+            <th>Name</th>
+            <th>Discription</th>
+            <th>Category</th>
+            <th>Man hours</th>
+            <th>Unit Charge</th>
+            <th>Taxed Amount</th>
+            <th>Discounted Amount</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let record of records; let i = index">
+            <td *ngIf="showCheckboxes">
+                <div class="checkbox" >
+                        <input id="checkbox-{{i}}" type="checkbox" [(ngModel)]="checkedItems[i]" (click)="onChecked(record)">
+                        <label for="checkbox-{{i}}"></label>
+                </div>
+            </td>
+            <td>{{record.name}}</td>
+            <td>{{record.description}}</td>
+            <td>{{record.fk_category_id}}</td>
+            <td>{{record.man_hours}}</td>
+            <td>{{record.unit_cost}}</td>
+            <td>{{record.tax}}</td>
+            <td>{{record.discount}}</td>
+            <td>100.0</td>
+            <td>
+                <button class="btn btn-link btn-sm" (click)="onEditClicked(record)">
+                        <clr-icon shape="edit" size="16"></clr-icon>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!-- /service table -->

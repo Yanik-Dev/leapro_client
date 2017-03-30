@@ -1,0 +1,19 @@
+<form [formGroup]="companyForm" class="compact" style="padding:0px">
+    <section>
+        <div class="form-group">
+            <label for="first_name">Company Name</label>
+              <input id="first_name" formControlName="name" type="text" placeholder="eg. Leapro">
+              <span class="not-valid">
+                {{ (companyForm.controls.name.getError('required'))?'This field is required':''}}
+                {{ (companyForm.controls.name.getError('minLength'))?'minimum 2 letters':''}}
+              </span>
+
+        </div>
+        <div class="form-group">
+            <label for="details">Established Date</label>
+            <input type="date" formControlName="establishedDate">
+        </div>
+    </section>
+</form>
+<br>
+<branch-form #branch></branch-form>

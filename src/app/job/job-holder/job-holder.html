@@ -1,0 +1,26 @@
+    <a class="btn btn-primary" (click)="isJob=true; opened =true; " >Create Job</a>
+    <a class="btn btn-primary" (click)="isJob=false;opened =true;">Create Estimate</a>
+    <clr-tabs>
+        <clr-tab-link [clrTabLinkId]="'link1'" [clrTabLinkActive]="true">Recent Jobs</clr-tab-link>
+        <clr-tab-link>All Jobs</clr-tab-link>
+        <clr-tab-link>Non Progressive Estimates</clr-tab-link>
+        <clr-tab-link>Scheduler</clr-tab-link>
+
+        <clr-tab-content [clrTabContentId]="'content1'" [clrTabContentActive]="true">
+            <p>The table below shows the top 10 most recently completed jobs for the client</p>
+            <job-grid
+                (onViewButtonClicked) = "navigateToPreview(1)"
+            ></job-grid>
+        </clr-tab-content>
+        <clr-tab-content>
+            <p>The table below shows the top 10 most recently completed jobs for the client</p>
+            <job-grid></job-grid>
+        </clr-tab-content>
+        <clr-tab-content>
+            <schedule-form></schedule-form>
+        </clr-tab-content>
+        <clr-tab-content>
+            
+        </clr-tab-content>
+    </clr-tabs>
+    <client-selection [opened]="opened" (closed)="opened=$event" [isJob]="isJob"></client-selection>

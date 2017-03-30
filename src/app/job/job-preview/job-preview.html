@@ -1,0 +1,132 @@
+
+<div class="container" >
+    <div class="row">
+        <div class="col-xs-12">
+    		<div class="order-title">
+                <div class="text-right" id="bypassme">
+                    <button class="btn btn-link"><clr-icon shape="edit" class="is-info"></clr-icon> Edit</button>
+                    <button class="btn btn-link"><clr-icon shape="file" class="is-info"></clr-icon> Save to Pdf</button>
+                    <button class="btn btn-link"><clr-icon shape="email" class="is-info"></clr-icon> Email</button>
+                </div>
+    			<h2>Leapro</h2>
+                 <ul class="list-unstyled">
+                     <li>Address: Kingston 5, New Kingston, Jamaica</li>
+                    <li>Tel: 876 786-9876 | Fax: 876 234-8790</li>
+                    <li>Email: Leapro@gmail.com | Website: www.leapro.com</li>
+                </ul>
+
+                <h3 class="text-right">Order # 12345</h3>
+                 
+    		</div>
+    		<hr>
+    		<div class="row">
+    			<div class="col-xs-6">
+    				<address>
+        			<strong>Quote To:</strong><br>
+    					Jane Smith<br>
+    					1234 Main<br>
+    					Apt. 4B<br>
+    					Springfield, ST 54321
+    				</address>
+    			</div>
+    			<div class="col-xs-6 text-right">
+    				<address>
+    					<strong>Quote Date:</strong><br>
+    					  March 7, 2014<br><br>
+    				</address>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    <table class="table table-compact table-noborder">
+        <thead>
+            <tr>
+                <th class="text-center"><strong>Good Thru</strong></th>
+                <th class="text-center"><strong>Payment Terms</strong></th>
+                <th class="right"><strong>Sales Rep</strong></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- foreach ($order->lineItems as $line) or some such thing here -->
+            <tr>
+                <td>09/09/2015</td>
+                <td class="text-center">COD</td>
+                <td class="text-center"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">
+    				<h5 class="panel-title"><strong>Order summary</strong></h5>
+    			</div>
+    			<div class="panel-body">
+    				<div class="table-responsive">
+    					<table class="table table-compact table-noborder">
+    						<thead>
+                                <tr>
+        							<th><strong>Item</strong></th>
+        							<th class="text-center"><strong>description</strong></th>
+        							<th class="text-center"><strong>Unit cost</strong></th>
+        							<th class="text-center"><strong>Quantity</strong></th>
+        							<th class="text-center"><strong>Discount</strong></th>
+        							<th class="text-center"><strong>Tax</strong></th>
+        							<th class="text-right"><strong>Total</strong></th>
+                                </tr>
+    						</thead>
+    						<tbody>
+    							<!-- foreach ($order->lineItems as $line) or some such thing here -->
+    							<tr>
+    								<td>BS-200</td>
+    								<td>BS-200</td>
+    								<td class="text-center">$10.99</td>
+    								<td class="text-center">1</td>
+    								<td class="text-right">$10.99</td>
+    								<td class="text-right">$10.99</td>
+    								<td class="text-right">$10.99</td>
+    							</tr>
+    							<tr>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="thick-line text-right"><strong>Subtotal</strong></td>
+    								<td class="thick-line text-right">$670.99</td>
+    							</tr>
+    							<tr>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line text-right"><strong>Total Discount</strong></td>
+    								<td class="no-line text-right">$15</td>
+    							</tr>
+    							<tr>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line text-right"><strong>Total Tax</strong></td>
+    								<td class="no-line text-right">$15</td>
+    							</tr>
+    							<tr>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line text-right"><strong>Total</strong></td>
+    								<td class="no-line text-right">$685.99</td>
+    							</tr>
+    						</tbody>
+    					</table>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</div>

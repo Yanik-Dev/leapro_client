@@ -1,0 +1,56 @@
+<form [formGroup]="serviceForm" class="compact row">
+    <section class="form-block col-sm-6">
+         <div class="form-group">
+            <label for="">Customer</label>
+             <div class="select">
+                <select formControlName="categoryId">
+                    <option value="" disabled selected>Choose Customer</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="details">Job</label>
+            <div class="select">
+                <select formControlName="categoryId">
+                    <option value="" disabled selected>Choose Job</option>
+                </select>
+            </div>
+        </div>        
+        <div class="form-group">
+            <label for="">Days</label>
+            <input id=""  type="number" formControlName="manHours" >
+        </div>
+        <div class="form-group">
+            <label for="">Hours</label>
+            <input id=""  type="number"formControlName="unitCharge" min="1" max="24">
+        </div>
+        <div class="form-group">
+            <label for="">Mins</label>
+            <input id=""  type="number"formControlName="unitCharge" min="0" max="60">
+        </div>
+         <div class="form-group">
+            <label for="formFields_8">Summary</label>
+            <textarea id="formFields_8" formControlName="description" rows="2"></textarea>
+        </div>
+         <div class="form-group">
+             
+            <label for="details">Technicians</label>
+            <div class="select" style="width: 100%">
+                <select formControlName="categoryId">
+                    <option value="" disabled selected>Choose Job</option>
+                </select>
+            </div><br>
+            <select size="5" style="width: 100%">
+              <option value="0" selected>None</option>
+              <option value="P">Percentage</option>
+              <option value="F">Fixed Amount</option>
+           </select>
+           <button class="btn btn-link">
+               <clr-icon shape="add"></clr-icon>
+           </button>
+           <button class="btn btn-link">
+               <clr-icon shape="remove"></clr-icon>
+           </button>
+        </div>
+    </section>
+</form>

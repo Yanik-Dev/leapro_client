@@ -1,0 +1,65 @@
+<clr-tabs>
+    <clr-tab-link [clrTabLinkId]="'link1'" [clrTabLinkActive]="true">Products</clr-tab-link>
+    <clr-tab-link>Services</clr-tab-link>
+    <clr-tab-link>Categories</clr-tab-link>
+    <clr-tab-link>Units</clr-tab-link>
+
+    <clr-tab-content [clrTabContentId]="'home-content'" [clrTabContentActive]="true">
+        <div class="card">
+            <div class="card-header">
+                Products 
+            </div>
+        <div class="card-block">
+            <div class="card-title"></div>            
+                <search-filter [searchBarPlaceholder]="'Search Products'"
+                                [optionPlaceholder]="'Select Category'" 
+                                [buttonTitle]="'New'"
+                                (buttonClickHandler)="productFormOpened=true"></search-filter>
+                <product-area-table [showTotalArea]="false" 
+                                    [showCheckboxes]="false" 
+                                    (onEditClicked)="product = $event; productFormOpened=true"
+                                    #productTable >
+                </product-area-table>
+            </div>
+        </div>
+        
+        <product-form   [product]="product" 
+                        [opened]="productFormOpened"
+                        (closed) = "productFormOpened = $event" 
+                        (onAddUnitButtonCliked)="openedunitFormOpened = true"></product-form>
+
+    </clr-tab-content>
+    <clr-tab-content>
+        <div class="card">
+            <div class="card-header">
+                Services 
+            </div>
+           <div class="card-block">
+               <div class="card-title"></div> 
+                <search-filter [searchBarPlaceholder]="'Search Services'"
+                                [optionPlaceholder]="'Select Category'" 
+                                [buttonTitle]="'New'"
+                                (buttonClickHandler)="servieFormOpened=true"></search-filter>
+
+                <service-table [showCheckboxes]="false" (editClickedHandler)="service = $event; servieFormOpened=true" #serviceTable></service-table>
+           </div>
+       </div>
+       <clr-modal [(clrModalOpen)]="servieFormOpened" [clrModalSize]="'xl'" [clrModalClosable]="false">
+            <h3 class="modal-title">Service Details</h3>
+            <div class="modal-body">
+                <service-form [service]="service" #serviceForm></service-form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" (click)="servieFormOpened = false">
+                    Add
+                </button>        
+                <button type="button" class="btn btn-danger" (click)="servieFormOpened = false; serviceForm.reset()">
+                    Close
+                </button>
+            </div>
+        </clr-modal>
+    </clr-tab-content>
+    <clr-tab-content>
+       
+    </clr-tab-content>
+</clr-tabs>

@@ -1,0 +1,22 @@
+<style>
+    .form-group{
+        padding-left:200px !important;
+        margin-right: 20px;
+    }
+</style>
+<form [formGroup]="unitForm" class="compact row">
+    <section class="form-block col-sm-12">
+        <div class="form-group">
+            <label for="" >Unit Name</label>
+            <input id="" formControlName="name" type="text" placeholder="">
+        </div>
+        <div class="form-group">
+            <label for="" >Unit Code</label>
+            <input id="" formControlName="code" type="text" placeholder="">
+        </div>
+         <div class="form-group">
+            <label for="formFields_8">Description</label>
+            <textarea formControlName="description" rows="2"></textarea>
+        </div> 
+    </section>
+ </form>
