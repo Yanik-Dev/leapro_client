@@ -2,11 +2,11 @@
       <section class="form-block">
         <div class="form-group">
           <label for="first_name">Client name</label>
-          <input id="first_name" formControlName="firstname" type="text" placeholder="first name">
-          <input id="last_name" formControlName="lastname" type="text" placeholder="last name">
-          <input id="other_name" formControlName="othername" type="text" placeholder="other name ">
-          <span class="not-valid" *ngIf="clientForm.controls['firstname'].hasError('required') && (clientForm.controls['firstname'].dirty || clientForm.controls['firstname'].touched)">Firstname field is required</span>
-          <span class="not-valid" *ngIf="clientForm.controls['lastname'].hasError('required') && (clientForm.controls['lastname'].dirty || clientForm.controls['lastname'].touched)">Lastname field is required</span>
+          <input id="first_name" formControlName="first_name" type="text" placeholder="first name">
+          <input id="last_name" formControlName="last_name" type="text" placeholder="last name">
+          <input id="other_name" formControlName="other_name" type="text" placeholder="other name ">
+          <span class="not-valid" *ngIf="clientForm.controls['first_name'].hasError('required') && (clientForm.controls['first_name'].dirty || clientForm.controls['first_name'].touched)">First name field is required</span>
+          <span class="not-valid" *ngIf="clientForm.controls['last_name'].hasError('required') && (clientForm.controls['last_name'].dirty || clientForm.controls['last_name'].touched)">Last name field is required</span>
         </div>
         <div class="row">
           <div class="col-sm-6">
@@ -24,7 +24,7 @@
               <div class="form-group">
                 <label for="details">Date of birth</label>
                 <div class="datepicker">
-                  <input type="date" style="border-top:0px; border-left: 0; border-right: 0px;">
+                  <input type="date">
                 </div>
               </div>
           </div>
@@ -32,26 +32,30 @@
             <div class="form-group">
               <label for="details">User Type</label>
               <div class="select" >
-                <select formControlName="clientType" (change)="clientTypeSelected()" #clientType>
+                <select formControlName="customer_type" (change)="clientTypeSelected()" #clientType>
                   <option value="" disabled selected>Choose User Type</option>
                   <option value="R">Residential</option>
                   <option value="C">Commercial</option>
               </select>
               </div>
-               <span class="not-valid" *ngIf="clientForm.controls['clientType'].hasError('required') && (clientForm.controls['clientType'].dirty || clientForm.controls['clientType'].touched)">User type field is required</span>
+               <span class="not-valid" *ngIf="clientForm.controls['customer_type'].hasError('required') && (clientForm.controls['customer_type'].dirty || clientForm.controls['customer_type'].touched)">User type field is required</span>
             </div>
 
             <div class="form-group">
               <label for="details">Campaign</label>
               <div class="select">
-                <select formControlName="campaign">
+                <select formControlName="fk_campaign_id">
                   <option value="" disabled selected>Choose Campaign</option>
-                  <option value="F">Facebook</option>
-                  <option value="I">Instagram</option>
-                  <option value="P">Phone Call</option>
+                  <option value="1">Phone Call</option>
+                  <option value="2">Facebook</option>
+                  <option value="3">Instagram</option>
+                  <option value="4">Twitter</option>
+                  <option value="5">Company Website</option>
+                  <option value="6">Word of mouth</option>
+                  <option value="7">Yellow Pages</option>
               </select>
               </div>
-               <span class="not-valid" *ngIf="clientForm.controls['campaign'].hasError('required') && (clientForm.controls['campaign'].dirty || clientForm.controls['campaign'].touched)">Campaign field is required</span>
+               <span class="not-valid" *ngIf="clientForm.controls['fk_campaign_id'].hasError('required') && (clientForm.controls['fk_campaign_id'].dirty || clientForm.controls['fk_campaign_id'].touched)">Campaign field is required</span>
             </div>
           </div>
         </div>    

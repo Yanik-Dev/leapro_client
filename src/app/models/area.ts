@@ -1,8 +1,8 @@
 
 export class IArea{
     id?: number;
-    name?: string;
-    description: string;
+    area_name?: string;
+    description?: string;
     length?: number;
     height?: number;
     depth?: number;

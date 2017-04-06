@@ -1,48 +1,48 @@
 import { Component, Input, SimpleChange } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { Service } from '../../models/service';
+import { IService } from '../../models/service';
 @Component({
 	selector: 'schedule-form',
 	templateUrl: './schedule-form.html',
 })
 export class ScheduleFormComponent{
 
-    @Input() service : Service = new Service();
+    @Input() service : IService;
 
     serviceForm : FormGroup;
 
     constructor(private _formBuilder: FormBuilder){
         
         this.serviceForm = this._formBuilder.group({
-            id : [this.service.id],
-            name : [this.service.name],
-            categoryId : [this.service.category.id],
-            description : [this.service.description],
-            manHours : [this.service.manHours],
-            unitCharge : [this.service.unitCharge],
-            discount : [this.service.discount],
-            discountType : [this.service.discountType],
-            tax : [this.service.tax],
-            taxType : [this.service.taxType],
+            id : [],
+            name : [],
+            categoryId : [],
+            description : [],
+            manHours : [],
+            unitCharge : [],
+            discount : [],
+            discountType : [],
+            tax : [],
+            taxType : [],
         })
     }
 
 
     ngOnChanges(change : SimpleChange){
-        let value = <Service> change['service'].currentValue;
+        let value = <IService> change['service'].currentValue;
         if(value){
             this.serviceForm.patchValue(
                 {
                    id : value.id,
                    name : value.name,
-                   categoryId : value.category.id,
+                   categoryId : value.fk_category_id,
                    description: value.description,
-                   manHours : value.manHours,
-                   unitCharge : value.unitCharge,
+                   manHours : value.man_hours,
+                   unitCharge : value.unit_charge,
                    discount : value.discount,              
-                   discountType : value.discountType,               
+                   discountType : value.discount_type,               
                    tax : value.tax,               
-                   taxType : value.taxType,               
+                   taxType : value.tax_type,               
                 }
             )
         }

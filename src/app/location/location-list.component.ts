@@ -1,5 +1,5 @@
 import { Component, Output, Input, EventEmitter } from '@angular/core';
-import { Address } from '../models/address';
+import { IAddress } from '../models/address';
 
 @Component({
     selector: 'location-list',
@@ -7,10 +7,10 @@ import { Address } from '../models/address';
     styleUrls: ['./location.scss']
 })
 export class LocationListComponent{
-    addressList : Array<Address> = [];   
+    addressList : Array<IAddress> = [];   
     addressDialogOpened : boolean = false;
     addressDetailsDialogOpened : boolean = false;
-    selectedAddress:Address = new Address();
+    selectedAddress:IAddress;
 
     /**
      * opens dialog if set to true
@@ -34,7 +34,7 @@ export class LocationListComponent{
      * set selected address to be passed to other components
      * @param Address address
      */
-    selectAddress(address:Address){
+    selectAddress(address:IAddress){
       this.selectedAddress = address;
     }
 
@@ -45,7 +45,7 @@ export class LocationListComponent{
      */
     addressAdded(event:any){
       console.log(event);
-      this.addressList.push(<Address>event);
+      this.addressList.push(<IAddress>event);
     }
     
     /**
@@ -54,7 +54,6 @@ export class LocationListComponent{
      */
     locationFormDialogClosed(event:any){
       this.addressDialogOpened = event;
-      this.selectedAddress = new Address();
     }
 
     /**
@@ -63,7 +62,6 @@ export class LocationListComponent{
      */
     detailsFormDialogClosed(event:any){
       this.addressDetailsDialogOpened = event;
-      this.selectedAddress = new Address();
     }
 
      /**

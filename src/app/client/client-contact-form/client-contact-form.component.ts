@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, SimpleChange } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Contact } from '../models/contact';
+import { IContact } from '../../models/contact';
 
 @Component({
     selector: 'client-contact-form',
@@ -8,14 +8,14 @@ import { Contact } from '../models/contact';
     styleUrls: ['./client.scss']
 })
 export class ClientContactFormComponent{
-     contact: Contact;
+     contact: IContact;
      contactForm: FormGroup;
    
     /**
      * used to populate form from Contact object passed to it 
      */
     @Input()
-    contactToUpdate: Contact = new Contact();
+    contactToUpdate: IContact;
     
     /**
      * opens dialog if set to true
@@ -36,7 +36,6 @@ export class ClientContactFormComponent{
     onDialogClosed = new EventEmitter();   
 
     constructor(private _formBuilder: FormBuilder){
-        this.contact = new Contact();
         this.contactForm = _formBuilder.group({
             id : [''],
             telephone : ['',Validators.compose([Validators.required, Validators.minLength(8)])],

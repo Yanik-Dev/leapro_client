@@ -1,17 +1,17 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { Area } from '../models/area';
+import { IArea } from '../models/area';
 import { AreaService } from './area.service';
 @Component({
     selector: 'area-table',
     templateUrl: 'area-table.html'
 })
 export class AreaTableComponent{
-    checkedAreas : Array<Area> = [];
+    checkedAreas : Array<IArea> = [];
     //checkbox handler
     checkedItems : Array<boolean>=[];
 
-    areas : Array<Area> =[];
+    areas : Array<IArea> =[];
 
     @Output() checkedValuesHandler = new EventEmitter();
     @Output() editClickedHandler = new EventEmitter();
@@ -84,7 +84,7 @@ export class AreaTableComponent{
      * 
      * @param any record
      */
-    onEditClicked(record: Area){
+    onEditClicked(record: IArea){
         this.editClickedHandler.emit(record);
     }
 }

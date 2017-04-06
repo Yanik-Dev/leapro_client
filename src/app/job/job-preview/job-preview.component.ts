@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Service } from '../../models/service';
+import { IService } from '../../models/service';
 import { IProductArea } from '../../models/product';
-import { Note } from '../../models/note';
+import { INote } from '../../models/note';
 import { Charge } from '../../models/charge';
 @Component({
 	selector: 'job-preview',
@@ -10,19 +10,16 @@ import { Charge } from '../../models/charge';
 })
 export class JobPreviewComponent implements OnInit, OnDestroy{
     charges : Array<Charge> = [];
-    
     //Required variables necessary to contruct job-order or estimate object
-    serviceList : Array<Service> = [];
+    serviceList : Array<IService> = [];
     productList : Array<IProductArea> = [];
-      notesList : Array<Note> = [];
+      notesList : Array<INote> = [];
 
     //keeps track of the product to which to the quantity button is clicked
     //or which product the add area button is clicked on
     selectedProduct : IProductArea;
 
-    constructor(private route: ActivatedRoute){
-       
-    }
+    constructor(private route: ActivatedRoute){}
 
     ngOnInit(){
         this.route.params.subscribe((param : any)=>{

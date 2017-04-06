@@ -9,21 +9,21 @@ import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 export class ClientFormComponent{
     preview: string;
     imgToUpload: File;
-    clientForm : FormGroup;
+    public clientForm : FormGroup;
 
     @ViewChild('location') location : any;
     @Output() onClientTypeSelected = new EventEmitter<any>();
     constructor(private _formBuilder : FormBuilder){
         this.clientForm = this._formBuilder.group({
             id : [0],
-            firstname: ["", Validators.compose([Validators.required, Validators.minLength(2)])],
-            lastname: ["", Validators.compose([Validators.required, Validators.minLength(2)])],
-            othername: ["", Validators.compose([Validators.required, Validators.minLength(2)])],
+            first_name: ["", Validators.compose([Validators.required, Validators.minLength(2)])],
+            last_name: ["", Validators.compose([Validators.required, Validators.minLength(2)])],
+            other_name: ["", Validators.compose([Validators.required, Validators.minLength(2)])],
             gender: ["M", Validators.compose([Validators.required])], 
-            dateOfBirth: [, Validators.compose([Validators.required])],
+            date_of_birth: [, Validators.compose([Validators.required])],
             details: ["", Validators.compose([Validators.required, Validators.minLength(2)])],
-            campaign: ["", Validators.compose([Validators.required])],
-            clientType: ["", Validators.compose([Validators.required])],
+            fk_campaign_id: ["", Validators.compose([Validators.required])],
+            customer_type: ["", Validators.compose([Validators.required])],
         })
     }
     
@@ -43,7 +43,7 @@ export class ClientFormComponent{
 
 
     clientTypeSelected(){
-        this.onClientTypeSelected.emit(this.clientForm.controls['clientType'].value)
+        this.onClientTypeSelected.emit(this.clientForm.controls['customer_type'].value)
     }
 
 }

@@ -17,6 +17,7 @@ import { JobGridComponent } from './job-grid/job-grid.component';
 import { JobHolderComponent } from './job-holder/job-holder.component';
 import {ClientSelectionComponent} from './client-selection/client-selection.component';
 import { ScheduleModule } from '../schedule/schedule.module';
+import { ClientService } from "../client/client.service";
 @NgModule({
     imports: [
        BrowserModule, 
@@ -43,7 +44,7 @@ import { ScheduleModule } from '../schedule/schedule.module';
            FreeInputComponent,
            ClientSelectionComponent
     ],
-    providers:[]
+    providers:[ClientService]
 })
 export class JobModule{
     

@@ -1,11 +1,13 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { Service } from '../../models/service';
+import { Router, ActivatedRoute } from '@angular/router'
+import { IService } from '../../models/service';
 import { IProductArea } from '../../models/product';
-import { Note } from '../../models/note';
+import { INote } from '../../models/note';
+import { IJob } from '../../models/job';
 import { Charge } from '../../models/charge';
-
-
+import { ClientService } from '../../client/client.service';
+import { IClient } from '../../models/client';
 @Component({
 	selector: 'job-form',
 	templateUrl: './job-form.html',
@@ -14,30 +16,80 @@ import { Charge } from '../../models/charge';
 export class JobFormComponent{
     jobOrderForm : FormGroup;
     charges : Array<Charge> = [];
-    
+    job : IJob;
+    title : String;
+    client : IClient;
    
     //Required variables necessary to contruct job-order or estimate object
-    serviceList : Array<Service> = [];
+    serviceList : Array<IService> = [];
     productList : Array<IProductArea> = [];
-      notesList : Array<Note> = [];
+      notesList : Array<INote> = [];
 
     //keeps track of the product to which to the quantity button is clicked
     //or which product the add area button is clicked on
     selectedProduct : IProductArea;
 
-    constructor(private _formBuilder: FormBuilder, private el :ElementRef){
-         
+    constructor(private _formBuilder: FormBuilder, 
+                private _clientService: ClientService,
+                private route: ActivatedRoute,
+                private router : Router){
         this.jobOrderForm = this._formBuilder.group({
-            id : [],
+            id : [, ],
+            type : [],
+            summary: [],
+            received_date: [],
+            expiry_date: []
         })
+
+        this.client = this._clientService.getClient()
+        this.route.params.subscribe((param : any)=>{
+               this.title = (param['isJob'] == 'true')?'Job Order': 'Estimate'
+               if(this.client == null && ( param['isJob'] != 'true' || param['isJob'] != 'false') ){
+                    this.router.navigate(['/app/job/view/'])
+               }
+        })
+        
     }
-    
+
+    /**
+     * ensure area "none" is applied to products with no area selected
+     */
+    checkForProductsWithoutAreas(){
+        for(let i =0; i < this.productList.length; i++){
+            if(this.productList[i].areas.length == 0){
+                this.productList[i].areas.push({id: 1})
+            }
+        }
+    }
+        
+    /**
+     * send form data to api
+     */
     submit(){
-        console.log({
-            services: this.serviceList,
-            products: this.productList,
-            notes: this.notesList
-        });
+        this.checkForProductsWithoutAreas()
+        let days = this.jobOrderForm.controls['expiry_date'].value;
+        let received_date = this.jobOrderForm.controls['received_date'].value
+        let date = new Date();
+        let newDate = new Date(date.setTime( date.getTime() + days * 86400000 ));
+        this.job = this.jobOrderForm.value
+        this.job.expiry_date = newDate.toLocaleDateString('en-US')
+        this.job.received_date = (received_date == null)? null: new Date(received_date).toLocaleDateString()
+        this.job.products = this.productList
+        this.job.services = this.serviceList
+        this.job.notes = this.notesList
+        console.log(this.job)
+    }
+
+    /**
+     * validate form before sending data to api
+     */
+    validate(){
+        if(this.serviceList.length == 0){
+
+        }
+        if(this.productList.length == 0){
+
+        }
     }
     /**
      * Maps and calculates service charges
@@ -88,6 +140,7 @@ export class JobFormComponent{
         this.serviceList = [];
         this.notesList = [];
     }
+
 
     /**
      * Maps and calculates product charges
@@ -197,7 +250,7 @@ export class JobFormComponent{
      * set the selected product when a button is checked on 
      * a specific product row
      */
-    setSelectedProduct(product : ProductArea){
+    setSelectedProduct(product : IProductArea){
         this.selectedProduct = product;
     }
 

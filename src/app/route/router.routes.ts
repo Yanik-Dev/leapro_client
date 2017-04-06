@@ -44,7 +44,7 @@ export const routes: Routes = [
               children:[
                   { path:'', redirectTo: '/app/job/view', pathMatch: 'full' },
                   { path:'view',  component: JobHolderComponent},
-                  { path:'form',  component: JobFormComponent},
+                  { path:'form/:isJob',  component: JobFormComponent},
                   { path:'preview/:id',  component: JobPreviewComponent},
               ]
             },

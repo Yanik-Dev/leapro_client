@@ -1,5 +1,5 @@
 import { Component, Output} from '@angular/core';
-import { Company } from '../../models/company';
+import { ICompany } from '../../models/company';
 @Component({
     selector: "company-list",
     templateUrl: "./company-list.html",
@@ -7,7 +7,7 @@ import { Company } from '../../models/company';
 
 })
 export class CompanyListComponent{
-    companyList: Array<Company>;
+    companyList: Array<ICompany>;
 
     constructor(){
        

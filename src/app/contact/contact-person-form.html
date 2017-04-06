@@ -3,13 +3,23 @@
         <div class="form-group">
             <label>Use client as primary contact</label>
             <div class="checkbox">
-                <input type="checkbox" id="checkrads_1" #check>
+                <input type="checkbox" id="checkrads_1" formControlName="isChecked" #check>
                 <label for="checkrads_1"></label>
             </div>
         </div>
         <div class="form-group" *ngIf="!check.checked">
             <label>Contact Person</label>
-            <input type="text"  formControlName="contact_person" formControlName="telephone" class="validate">
+            <input type="text"  formControlName="contact_name" formControlName="telephone" class="validate">
+        </div>
+        <div class="form-group" *ngIf="!check.checked">
+            <label for="details">Gender</label>
+            <div class="select">
+                <select formControlName="gender">
+                        <option value="" disabled selected>Choose gender</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                </select>
+            </div>
         </div>
         <div class="form-group">
             <label>Telephone</label>

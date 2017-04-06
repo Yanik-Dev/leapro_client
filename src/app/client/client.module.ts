@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { ClarityModule } from 'clarity-angular';
 
 import { CompanyModule } from '../company/company.module';
+import { HttpClient } from '../shared_module/http-client.service';
 import { ClientHomeComponent } from './client-home/client-home.component';
 import { ClientGridComponent } from './client-grid/client-grid.component';
 import { ClientFormComponent } from './client-form/client-form.component';
@@ -50,7 +51,7 @@ import { JobModule } from '../job/job.module';
                   ClientProfileComponent,
                   NewClientFormComponent
                 ],
-  providers:[ClientService]
+  providers:[ClientService, HttpClient]
 })
 
 export class ClientModule{}

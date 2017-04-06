@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Address } from '../models/address';
+import { IAddress } from '../models/address';
 
 @Component({
     selector: 'location-details',
@@ -18,7 +18,7 @@ export class LocationDetailsComponent{
      * used to populate view from Address object passed to it 
      */
     @Input()
-    address : Address = new Address();
+    address : IAddress;
 
     /**
      * emits boolean false

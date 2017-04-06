@@ -15,41 +15,25 @@
     <!-- job-order details -->
     <div class="card">
         <div class="card-header">
-           <clr-icon shape="list" size="32"></clr-icon> Details
+           <clr-icon shape="list" size="32"></clr-icon> {{title}} Details
         </div>
       <div class="card-block">
-         <div class="card-title">Client #0001 - Yanik Blake</div>
+         <div class="card-title">Client - {{client?.name}}</div>
            <div class="row">
-                <section class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class="form-group">
-                        <label for="details">Company</label>
-                        <div class="select">
-                            <select >
-                                <option value="" disabled selected>Choose Location</option>
-                            </select>
-                        </div>
-                    </div>
-                 </section>
-                 <section class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class="form-group">
-                        <label for="details">Branch</label>
-                        <div class="select">
-                            <select >
-                                <option value="" disabled selected>Choose Location</option>
-                            </select>
-                        </div>
-                    </div>
-                 </section>
                 <section class="form-block col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="form-group">
                             <label for="formFields_8">Summary</label>
-                            <textarea id="formFields_8" rows="2"></textarea>
+                            <textarea id="formFields_8" rows="2" formControlName="summary"></textarea>
                         </div>
                 </section>
                 <section class="form-block  col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="form-group">
+                        <label for="">Received Date</label>
+                        <input id=""  type="date" formControlName="received_date">
+                    </div>
+                    <div class="form-group">
                         <label for="">Days Before expiration</label>
-                        <input id=""  type="number" placeholder="">
+                        <input id=""  type="number" formControlName="expiry_date">
                     </div>
                 </section>
              </div>

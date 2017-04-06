@@ -1,6 +1,6 @@
 import { Component, Output, ViewChild} from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Company } from '../../models/company';
+import { ICompany } from '../../models/company';
 @Component({
     selector: "client-company-form",
     templateUrl: "./client-company-form.html",
@@ -8,16 +8,16 @@ import { Company } from '../../models/company';
 
 })
 export class ClientCompanyFormComponent{
-    companyForm: FormGroup;
-    company: Company;
+    public companyForm: FormGroup;
+    company: ICompany;
 
     @ViewChild('branch') branch : any;
     
     constructor(private _formBuilder: FormBuilder){
         this.companyForm = this._formBuilder.group({
                'id': [0,],
-             'name': ['', Validators.compose([Validators.required, Validators.minLength(2)])],
-            'establishedDate': ['',]
+             'company_name': ['', Validators.compose([Validators.required, Validators.minLength(2)])],
+            'established_date': ['',]
         })
     }
 

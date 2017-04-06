@@ -1,6 +1,6 @@
-import { Component, Input, Output,EventEmitter, SimpleChange } from '@angular/core';
+import { Component, Input, Output,EventEmitter, SimpleChange, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl, Validators} from '@angular/forms';
-import { Contact } from '../models/contact';
+import { IContact } from '../models/contact';
 
 @Component({
     selector: "contact-person-form",
@@ -9,7 +9,9 @@ import { Contact } from '../models/contact';
 
 })
 export class ContactPersonFormComponent{
-    contactForm: FormGroup;
+
+    @ViewChild('check') check: any;
+    public contactForm: FormGroup;
    
     /**
      * used to populate form from Contact object passed to it 
@@ -34,11 +36,13 @@ export class ContactPersonFormComponent{
         
         this.contactForm = _formBuilder.group({
             id : [''],
-            contact_person: ['',Validators.compose([Validators.minLength(8)])],
+            isChecked : [],
+            contact_name: ['',Validators.compose([Validators.minLength(8)])],
             telephone : ['',Validators.compose([Validators.required, Validators.minLength(8)])],
             mobile : ['', Validators.compose([Validators.required, Validators.minLength(8)])],
             fax : ['', Validators.compose([Validators.required, Validators.minLength(8)])],
             email : ['', Validators.compose([Validators.minLength(3)])],
+            gender : ['', Validators.compose([Validators.required])],
             
         });
     }

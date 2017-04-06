@@ -8,7 +8,7 @@ export interface IProduct {
     discount?: number
     tax_type?: String
     tax?: number
-    selling_cost?: String
+    selling_cost?: number
     application?: String
     dilution?: String
     fk_category_id?: number

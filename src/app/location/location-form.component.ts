@@ -1,6 +1,6 @@
 import { Component, Input, Output,EventEmitter, SimpleChange } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl, Validators} from '@angular/forms';
-import { Address } from '../models/address';
+import { IAddress } from '../models/address';
 @Component({
     selector: 'location-form',
     templateUrl: './location-form.html',
@@ -8,14 +8,14 @@ import { Address } from '../models/address';
 })
 export class LocationFormComponent{
     
-    addressForm: FormGroup;
-    address: Address;
+    public addressForm: FormGroup;
+    address: IAddress;
    
     /**
      * used to populate form from Address object passed to it 
      */
     @Input()
-    addressToUpdate: Address = new Address();
+    addressToUpdate: IAddress;
     
     /**
      * opens dialog if set to true
@@ -36,7 +36,6 @@ export class LocationFormComponent{
     onDialogClosed = new EventEmitter();   
 
     constructor(private _formBuilder: FormBuilder){
-        this.address = new Address();
         this.addressForm = _formBuilder.group({
             id : [''],
             street : ['',Validators.compose([Validators.required])],
@@ -46,10 +45,7 @@ export class LocationFormComponent{
             type : [''],
             status : [''],
             details : ['', Validators.compose([Validators.minLength(3)])],
-            country : this._formBuilder.group({
-                id : ['', Validators.compose([Validators.required])],
-                country : []
-            })
+            fk_country_id : ['', Validators.compose([Validators.required])],
         });
     }
     

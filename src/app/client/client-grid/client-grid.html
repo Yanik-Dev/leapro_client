@@ -1,13 +1,15 @@
 <clr-datagrid (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading">
     <clr-dg-column>Client ID</clr-dg-column>
-    <clr-dg-column [clrDgField]="'first_name'">Name</clr-dg-column>
-    <clr-dg-column [clrDgField]="'details'">Details</clr-dg-column>
+    <clr-dg-column [clrDgField]="'name'">Name</clr-dg-column>
+    <clr-dg-column >Details</clr-dg-column>
+    <clr-dg-column >Client Type</clr-dg-column>
     <clr-dg-column ></clr-dg-column>
      <clr-dg-placeholder>We couldn't find any users!</clr-dg-placeholder>
     <clr-dg-row *ngFor="let client of clients">
         <clr-dg-cell>{{client.id}}</clr-dg-cell>
-        <clr-dg-cell>{{client.first_name}}</clr-dg-cell>
+        <clr-dg-cell>{{client.name}}</clr-dg-cell>
         <clr-dg-cell>{{client.details}}</clr-dg-cell>
+        <clr-dg-cell>{{client.flag}}</clr-dg-cell>
         <clr-dg-cell>
             <clr-dropdown [clrMenuPosition]="'bottom-right'" [clrCloseMenuOnItemClick]="false">
                 <button clrDropdownToggle>

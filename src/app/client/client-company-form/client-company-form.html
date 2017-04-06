@@ -2,16 +2,16 @@
     <section>
         <div class="form-group">
             <label for="first_name">Company Name</label>
-              <input id="first_name" formControlName="name" type="text" placeholder="eg. Leapro">
+              <input id="first_name" formControlName="company_name" type="text" placeholder="eg. Leapro">
               <span class="not-valid">
-                {{ (companyForm.controls.name.getError('required'))?'This field is required':''}}
-                {{ (companyForm.controls.name.getError('minLength'))?'minimum 2 letters':''}}
+                {{ (companyForm.controls.company_name.getError('required'))?'This field is required':''}}
+                {{ (companyForm.controls.company_name.getError('minLength'))?'minimum 2 letters':''}}
               </span>
 
         </div>
         <div class="form-group">
             <label for="details">Established Date</label>
-            <input type="date" formControlName="establishedDate">
+            <input type="date" formControlName="established_date">
         </div>
     </section>
 </form>

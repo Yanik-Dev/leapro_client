@@ -2,36 +2,20 @@
     <h3 class="modal-title">Choose Client</h3>
     <div class="modal-body">
        <form [formGroup]="clientForm" class="compact">
-        <section class="form-block">     
+           
             <div class="form-group">
-                <label for="details">Client</label>
+                <label for="details">Clients</label>
                 <div class="select">
-                    <select>
-                    <option value="" disabled selected>Select Client</option>
-                </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="details">Company</label>
-                <div class="select">
-                    <select >
-                      <option value="" disabled selected>Choose Company</option>
-                    </select>
-                </div>
-             </div>
-             <div class="form-group">
-                <label for="details">Branch</label>
-                <div class="select">
-                    <select >
-                       <option value="" disabled selected>Choose Branch</option>
+                    <select [(ngModel)]="selectedValue" [ngModelOptions]="{standalone: true}">
+                      <option value="" disabled selected>Select Client</option> 
+                      <option [ngValue]="client" *ngFor="let client of clients"  [class.hidden]="client.flag =='Company'">{{client.name}}</option>
                     </select>
                 </div>
             </div>
-        </section>
       </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-link" (click)="gotoJob()">
+        <button type="button" class="btn btn-link" (click)="gotoJob()" [disabled]="selectedValue == ''">
             Next
         </button>        
         <button type="button" class="btn btn-danger" (click)="close();">

@@ -8,7 +8,7 @@ export const  ROUTES = {
      AUTHENTICATE: baseUrl+"",
      CLIENT: {
             get: baseUrl+"clients",
-            insert: baseUrl+"clients",
+            insert: baseUrl+"clients/create",
             update: baseUrl+""
      },
      PRODUCT: {

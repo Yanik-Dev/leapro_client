@@ -26,7 +26,7 @@
         <div class="card-header">
             <clr-icon shape="building" size="32" ></clr-icon> Company & Branch Details
         </div>
-      <div class="card-block">
+       <div class="card-block">
          <div class="card-title"></div>
              <client-company-form #company></client-company-form>
         </div>
@@ -44,13 +44,13 @@
      </div>
     <!-- /company details -->
 
-    <button class="btn btn-primary" (click)="openWizard = !openWizard">
+    <button class="btn btn-primary" (click)="submit()">
     <clr-icon shape="check" size="20"></clr-icon> Save
     </button>
-    <button class="btn btn" (click)="openWizard = !openWizard">
+    <button class="btn btn">
     <clr-icon shape="remove" size="20"></clr-icon> Clear
     </button>
-    <button class="btn btn-danger" (click)="openWizard = !openWizard">
+    <button class="btn btn-danger">
     <clr-icon shape="cancel" size="20"></clr-icon> Cancel
     </button>
  
