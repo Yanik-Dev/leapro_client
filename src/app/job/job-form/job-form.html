@@ -108,15 +108,15 @@
             <div class="row flex-items-sm-center">
                 <div class=" col-sm-4">
                         <label for="formFields_8">Client Notes</label>
-                        <textarea id="formFields_8" rows="2"></textarea>
+                        <textarea id="formFields_8" rows="2" [(ngModel)]="clientNote" [ngModelOptions]="{standalone: true}"></textarea>
                 </div>
                 <div class=" col-sm-4">
                         <label for="formFields_8">Private Notes</label>
-                        <textarea id="formFields_8" rows="2"></textarea>
+                        <textarea id="formFields_8" rows="2" [(ngModel)]="privateNote" [ngModelOptions]="{standalone: true}"></textarea>
                 </div>
                 <div class=" col-sm-4">
                         <label for="formFields_8">Technician Notes</label>
-                        <textarea id="formFields_8" rows="2"></textarea>
+                        <textarea id="formFields_8" rows="2" [(ngModel)]="technicianNote" [ngModelOptions]="{standalone: true}"></textarea>
                 </div>
             </div>
             <!-- /notes -->
@@ -154,6 +154,16 @@
         </button>
     </div>
 </clr-modal>
+<!-- error modal -->
+<clr-modal [(clrModalOpen)]="error.isValid">
+    <h3 class="modal-title">Invalid</h3>
+    <div class="modal-body">
+        <p>{{error.message}}</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="error.isValid = false">Ok</button>
+    </div>
+</clr-modal>
 
 <clr-modal [(clrModalOpen)]="servieFormOpened" [clrModalSize]="'xl'" [clrModalClosable]="false">
     <h3 class="modal-title">Service Details</h3>
@@ -173,12 +183,7 @@
 <clr-modal [(clrModalOpen)]="productListOpened" [clrModalSize]="'xl'" [clrModalClosable]="false">
     <h3 class="modal-title">Product List</h3>
     <div class="modal-body">
-        <search-filter [searchBarPlaceholder]="'Search Products'"
-                        [optionPlaceholder]="'Select Category'" 
-                        [buttonTitle]="'New'"
-                        (buttonClickHandler)="productFromOpened=true"></search-filter>
         <product-area-table #productTable 
-                            (onEditClicked)="product = $event; productFromOpened=true"
                             (onAddAreaClicked)="setSelectedProduct($event);areaModalOpened = true; "
                             (onAddQuantityClicked)="setSelectedProduct($event);quantityModalOpened = true; "></product-area-table>
     </div>

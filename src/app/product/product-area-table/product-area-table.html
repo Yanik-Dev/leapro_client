@@ -1,38 +1,41 @@
-<!-- product table -->
-<table class="table">
-    <thead>
-        <tr>
-            <th *ngIf="showCheckboxes"></th>
-            <th>Name</th>
-            <th>Category</th>
-            <th *ngIf="showTotalArea">Estimated Quantity</th>
-            <th *ngIf="showTotalArea">Total Size</th>
-            <th>Selling Price</th>
-            <th>Taxed Amount</th>
-            <th>Discounted Amount</th>
-            <th>Total</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let product of records; let i = index" >
-            <td *ngIf="showCheckboxes">
-                <div class="checkbox" >
-                    <input id="checkbox-{{i}}" type="checkbox" [(ngModel)]="checkedItems[i]" (click)="onChecked(product)">
-                    <label for="checkbox-{{i}}"></label>
-                </div>
-            </td>
-            <td>{{product.product.name}}</td>
-            <td>{{product.product.category}}</td>
-            <td *ngIf="showTotalArea">{{product.product.quantity}} <clr-icon shape="edit" size="16" (click)="addQuantity(product)"></clr-icon></td>
-            <td  *ngIf="showTotalArea"> {{calculateTotalSize(product)}} <clr-icon shape="add" size="16" (click)="addArea(product)"></clr-icon></td>
-            <td>{{product.product.selling_cost}}</td>
-            <td>{{product.product.tax}}</td>
-            <td>{{product.product.discount}}</td>
-            <td>$ {{product.product.selling_cost + (product.product.selling_cost * (product.product.tax/100)) 
-                -(product.product.selling_cost* (product.product.discount/100)) }}</td>
-            <td><clr-icon shape="edit" size="16" (click)="editClicked(product)"></clr-icon></td>
-        </tr>
-    </tbody>
-</table>
-<!-- /product table -->
+<clr-datagrid  (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading" >
+    <clr-dg-column></clr-dg-column>
+    <clr-dg-column [clrDgField]="'name'">Name</clr-dg-column>
+    <clr-dg-column [clrDgField]="'category'" >Category</clr-dg-column>
+    <clr-dg-column *ngIf="showTotalArea">Estimated Quantity</clr-dg-column>
+    <clr-dg-column *ngIf="showTotalArea">Total Size</clr-dg-column>
+    <clr-dg-column >Selling Price</clr-dg-column>
+    <clr-dg-column >Taxed Amount</clr-dg-column>
+    <clr-dg-column >Discounted Amount</clr-dg-column>
+    <clr-dg-column >Total</clr-dg-column>
+    <clr-dg-column ><clr-icon shape="add" size="24" (click)="opened = true;"></clr-icon></clr-dg-column>
+     <clr-dg-placeholder>We couldn't find any products!</clr-dg-placeholder>
+    <clr-dg-row *clrDgItems="let product of records; let i = index">
+        <clr-dg-cell>
+             <div class="checkbox" >
+                <input id="checkbox-{{i}}" type="checkbox" [(ngModel)]="checkedItems[i]" (click)="onChecked(product)">
+                <label for="checkbox-{{i}}"></label>
+             </div>
+        </clr-dg-cell>
+        <clr-dg-cell>{{product.product.name}}</clr-dg-cell>
+        <clr-dg-cell>{{product.product.category}}</clr-dg-cell>
+        <clr-dg-cell *ngIf="showTotalArea">{{product.product.quantity}} <clr-icon shape="edit" size="16" (click)="addQuantity(product)"></clr-icon></clr-dg-cell>
+        <clr-dg-cell *ngIf="showTotalArea"> {{calculateTotalSize(product)}} <clr-icon shape="add" size="16" (click)="addArea(product)"></clr-icon></clr-dg-cell>
+        <clr-dg-cell>{{product.product.selling_cost}}</clr-dg-cell>
+        <clr-dg-cell>{{product.product.tax}}</clr-dg-cell>
+        <clr-dg-cell>{{product.product.discount}}</clr-dg-cell>
+        <clr-dg-cell>$ {{product.product.selling_cost + (product.product.selling_cost * (product.product.tax/100)) 
+                -(product.product.selling_cost* (product.product.discount/100)) }}</clr-dg-cell>
+        <clr-dg-cell>
+           <clr-icon shape="edit" size="16" (click)="editClicked(product); opened = true;"></clr-icon>
+        </clr-dg-cell>
+    </clr-dg-row>
+    <clr-dg-footer>
+        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{total}} products
+        <clr-dg-pagination #pagination [clrDgTotalItems]="total" [clrDgPageSize]="20"></clr-dg-pagination>
+    </clr-dg-footer>
+</clr-datagrid>
+
+ <product-form   [product]="productToEdit" 
+                        [opened]="opened"
+                        (closed) = "opened = $event" ></product-form>

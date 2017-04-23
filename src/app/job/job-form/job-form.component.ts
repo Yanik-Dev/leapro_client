@@ -7,6 +7,7 @@ import { INote } from '../../models/note';
 import { IJob } from '../../models/job';
 import { Charge } from '../../models/charge';
 import { ClientService } from '../../client/client.service';
+import { JobService } from '../job.service';
 import { IClient } from '../../models/client';
 @Component({
 	selector: 'job-form',
@@ -19,6 +20,10 @@ export class JobFormComponent{
     job : IJob;
     title : String;
     client : IClient;
+    privateNote : string = ""
+    technicianNote : string = ""
+    clientNote : string = ""
+    error :any = {isvalid: false, message:''}
    
     //Required variables necessary to contruct job-order or estimate object
     serviceList : Array<IService> = [];
@@ -31,6 +36,7 @@ export class JobFormComponent{
 
     constructor(private _formBuilder: FormBuilder, 
                 private _clientService: ClientService,
+                private _jobService: JobService,
                 private route: ActivatedRoute,
                 private router : Router){
         this.jobOrderForm = this._formBuilder.group({
@@ -38,7 +44,7 @@ export class JobFormComponent{
             type : [],
             summary: [],
             received_date: [],
-            expiry_date: []
+            expiry_date: [30, ]
         })
 
         this.client = this._clientService.getClient()
@@ -51,6 +57,14 @@ export class JobFormComponent{
         
     }
 
+    /**
+     * get all notes
+     */
+    checkForNotesEntered(){
+        if(this.privateNote.trim().length > 0){ this.notesList.push({ details:this.privateNote, note_type: 'Private'}) }
+        if(this.technicianNote.trim().length > 0){ this.notesList.push({details:this.technicianNote, note_type: 'Technician'}) }
+        if(this.clientNote.trim().length > 0){ this.notesList.push({details : this.clientNote, note_type: 'Client'}) }
+    }
     /**
      * ensure area "none" is applied to products with no area selected
      */
@@ -66,18 +80,26 @@ export class JobFormComponent{
      * send form data to api
      */
     submit(){
+        
+        if(!this.validate()) { return}
         this.checkForProductsWithoutAreas()
+        this.checkForNotesEntered()
         let days = this.jobOrderForm.controls['expiry_date'].value;
         let received_date = this.jobOrderForm.controls['received_date'].value
         let date = new Date();
         let newDate = new Date(date.setTime( date.getTime() + days * 86400000 ));
         this.job = this.jobOrderForm.value
+        this.job.type = this.title
+        this.job.fk_job_status_id = (this.title == "Estimate")?1:2
         this.job.expiry_date = newDate.toLocaleDateString('en-US')
         this.job.received_date = (received_date == null)? null: new Date(received_date).toLocaleDateString()
         this.job.products = this.productList
         this.job.services = this.serviceList
         this.job.notes = this.notesList
         console.log(this.job)
+        this._jobService.insert(this.job).subscribe(res => {
+            console.log(res)
+        })
     }
 
     /**
@@ -85,11 +107,16 @@ export class JobFormComponent{
      */
     validate(){
         if(this.serviceList.length == 0){
-
+            this.error.isValid= true;
+            this.error.message = "At least one service is required"
+            return false
         }
         if(this.productList.length == 0){
-
+            this.error.isValid= true;
+            this.error.message = "At least one product is required"
+            return false
         }
+        return true
     }
     /**
      * Maps and calculates service charges
@@ -146,7 +173,7 @@ export class JobFormComponent{
      * Maps and calculates product charges
      */
     addProductCharges(products: any = []){
-       var index = 0;
+       var index = 0; 
        let tempArr : Array<any> = [];
 
        //cancel function execution if parameter is empty

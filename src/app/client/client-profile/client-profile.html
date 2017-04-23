@@ -20,15 +20,15 @@
     <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
             <div class="card-block">
-                <div class="card-title">Client #0001</div>
+                <div class="card-title">{{client?.name}}</div>
                 <div class="card-media-block">
-                    <img src="../assets/img/profile_placeholder.jpg" class="card-media-image">
+                    <img src="{{client?.profile_img_path || '../assets/img/profile_placeholder.jpg'}}" class="card-media-image">
                     <div class="card-media-description">
                         <span class="card-media-title">
-                           John Doe
+                           {{client?.name}}
                         </span>
                         <span class="card-media-text">
-                           Commericial Client 
+                           {{client?.flag}}
                         </span>
                     </div>
                 </div>
@@ -68,6 +68,7 @@
             <div class="card-block">
                 <div class="card-title"></div>
                 <div class="card-media-block">
+                    <!-- commercial clients -->
                     <clr-tree-node [clrTreeNodeExpanded]="true">
                             <b> Companies </b>
                             <clr-tree-node (mouseleave)='show=false;' (mouseover)='show=true;' [clrTreeNodeExpanded]="true">
@@ -82,13 +83,11 @@
                                             <clr-tree-node>Kitchen</clr-tree-node>
                                             <clr-tree-node>Parking Lot</clr-tree-node>
                                         </clr-tree-node>
-                                        
                                     </clr-tree-node>
-                                    
                                 </clr-tree-node>
-                        
                             </clr-tree-node>
                         </clr-tree-node>
+                    <!-- /commercial clients -->
                 </div>
             </div>
         </div>

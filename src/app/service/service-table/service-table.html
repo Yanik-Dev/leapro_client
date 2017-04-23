@@ -26,7 +26,9 @@
             <td>{{record.description}}</td>
             <td>{{record.fk_category_id}}</td>
             <td>{{record.man_hours}}</td>
-            <td>{{record.unit_cost}}</td>
+            <td>
+                
+            </td>
             <td>{{record.tax}}</td>
             <td>{{record.discount}}</td>
             <td>100.0</td>
@@ -39,3 +41,42 @@
     </tbody>
 </table>
 <!-- /service table -->
+<clr-datagrid  (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading" >
+    <clr-dg-column></clr-dg-column>
+    <clr-dg-column [clrDgField]="'name'">Name</clr-dg-column>
+    <clr-dg-column [clrDgField]="'category'" >Category</clr-dg-column>
+    <clr-dg-column >Description</clr-dg-column>
+    <clr-dg-column >Man hour</clr-dg-column>
+    <clr-dg-column >Unit Charge</clr-dg-column>
+    <clr-dg-column >Taxed Amount</clr-dg-column>
+    <clr-dg-column >Discounted Amount</clr-dg-column>
+    <clr-dg-column >Total</clr-dg-column>
+    <clr-dg-column ><clr-icon shape="add" size="24" (click)="opened = true;"></clr-icon></clr-dg-column>
+     <clr-dg-placeholder>We couldn't find any products!</clr-dg-placeholder>
+    <clr-dg-row *clrDgItems="let record of records; let i = index">
+        <clr-dg-cell>
+             <div class="checkbox" >
+                <input id="checkbox-{{i}}" type="checkbox" [(ngModel)]="checkedItems[i]" (click)="onChecked(product)">
+                <label for="checkbox-{{i}}"></label>
+             </div>
+        </clr-dg-cell>
+        <clr-dg-cell>{{record.name}}</clr-dg-cell>
+        <clr-dg-cell>{{product.category}}</clr-dg-cell>
+        <clr-dg-cell >{{record.description}} </clr-dg-cell>
+         <clr-dg-cell>{{record.man_hours}}</clr-dg-cell>
+        <clr-dg-cell>{{record.tax}}</clr-dg-cell>
+        <clr-dg-cell>{{record.discount}}</clr-dg-cell>
+        <clr-dg-cell>$ {{record.man_hours +  }}</clr-dg-cell>
+        <clr-dg-cell>
+           <clr-icon shape="edit" size="16" (click)="editClicked(product); opened = true;"></clr-icon>
+        </clr-dg-cell>
+    </clr-dg-row>
+    <clr-dg-footer>
+        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{total}} products
+        <clr-dg-pagination #pagination [clrDgTotalItems]="total" [clrDgPageSize]="20"></clr-dg-pagination>
+    </clr-dg-footer>
+</clr-datagrid>
+
+ <product-form   [product]="productToEdit" 
+                        [opened]="opened"
+                        (closed) = "opened = $event" ></product-form>

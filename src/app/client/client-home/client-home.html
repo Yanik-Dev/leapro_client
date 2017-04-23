@@ -3,6 +3,9 @@
     <div class="card">
         <div class="card-block">
             <div class="card-title">Recently Added Clients</div>
+            <ul>
+                <li *ngFor="let client of recentClients">{{client.name}}</li>
+            </ul>
         </div>
     </div>
     </div>

@@ -9,6 +9,12 @@ export const  ROUTES = {
      CLIENT: {
             get: baseUrl+"clients",
             insert: baseUrl+"clients/create",
+            update: baseUrl+"",
+            search: baseUrl+"clients/"
+     },
+     JOB: {
+            get: baseUrl+"jobs",
+            insert: baseUrl+"jobs/create",
             update: baseUrl+""
      },
      PRODUCT: {

@@ -20,10 +20,27 @@ export class ClientService{
        return this._httpClient.get(Backend.ROUTES.CLIENT.get)
                   .map(value => value.json())
                   .catch(err => 'Server error');
+    }    
+    /**
+     * returns all clients
+     * @return Observable<IClient[]>
+     */
+    recent() : any{
+       return this._httpClient.get(Backend.ROUTES.CLIENT.get +'/?limit=5&page=1')
+                  .map(value => value.json())
+                  .catch(err => 'Server error');
     }
     
 
-
+    /**
+     * search  clients table
+     * @return Observable<IClient[]>
+     */
+    search(name : any) : any{
+       return this._httpClient.get(Backend.ROUTES.CLIENT.search+name)
+                  .map(value => value.json())
+                  .catch(err => 'Server error');
+    }
 
     /**
      * inserts a client model into the database

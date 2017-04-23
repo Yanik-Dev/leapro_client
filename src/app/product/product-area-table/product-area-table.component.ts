@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, SimpleChange } from '@a
 import { IProduct, IProductArea } from '../../models/product';
 import { IArea } from '../../models/area';
 import { ProductService } from '../product.service';
+import {State} from "clarity-angular";
 
 @Component({
     selector: 'product-area-table',
@@ -9,10 +10,11 @@ import { ProductService } from '../product.service';
 })
 export class ProductAreaTableComponent implements OnInit{
     
+    loading: boolean = true;
     checkedRecords : Array<IProductArea> = [];
     //checkbox handler
     checkedItems : Array<boolean>=[];
-
+    productToEdit : IProductArea
 
     /**
      * determine if checkboxes are to be shown
@@ -37,7 +39,7 @@ export class ProductAreaTableComponent implements OnInit{
      * accepts a IProductArea object and maps 
      * it to the one matching in the IProductArea array
      */
-    @Input() product : IProductArea;
+    @Input() product : IProduct;
 
     /**
      * return product object when edit button is clicked
@@ -75,8 +77,26 @@ export class ProductAreaTableComponent implements OnInit{
                     this.records[i].product.quantity = 0;
                     this.checkedItems.push(false);
                 }
+                this.loading= false
             }
         )
+    }
+
+    refresh(state: State) {
+       // this.loading = true;
+        // convert the filters from an array to a map,
+        // because that's what our backend-calling service is expecting
+        let filters:{[prop:string]: any} = {};
+        
+        if (state.filters) {
+            for (let filter of state.filters) {
+                let {property, value} = <{property: string, value: string}>filter;
+                filters[property] = [value];
+                console.log(filters['undefined'])
+            }
+
+        }
+     
     }
     
    /**
@@ -97,6 +117,7 @@ export class ProductAreaTableComponent implements OnInit{
                 this.products[i]= product;
                }
             }
+
         }
     }
 
@@ -134,6 +155,8 @@ export class ProductAreaTableComponent implements OnInit{
      * @emits Product
      */
     editClicked(record: IProductArea){
+        this.productToEdit= record.product;
+        console.log(this.productToEdit)
         this.onEditClicked.emit(record.product);
     }
 
