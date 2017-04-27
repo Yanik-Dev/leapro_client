@@ -2,17 +2,20 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router'
 import { IService } from '../../models/service';
-import { IProductArea } from '../../models/product';
+import { IProduct, IProductArea } from '../../models/product';
 import { INote } from '../../models/note';
 import { IJob } from '../../models/job';
 import { Charge } from '../../models/charge';
 import { ClientService } from '../../client/client.service';
 import { JobService } from '../job.service';
 import { IClient } from '../../models/client';
+import { IArea } from "app/models/area";
+
+
 @Component({
 	selector: 'job-form',
 	templateUrl: './job-form.html',
-	styleUrls: ['./job-form.scss']
+	styleUrls: ['./job-form.scss'],
 })
 export class JobFormComponent{
     jobOrderForm : FormGroup;
@@ -29,7 +32,10 @@ export class JobFormComponent{
     serviceList : Array<IService> = [];
     productList : Array<IProductArea> = [];
       notesList : Array<INote> = [];
-
+    //stores the clients none area if no area was selected
+      noArea : IArea;
+    //stores all the clients areas
+     areas: Array<IArea>= [];
     //keeps track of the product to which to the quantity button is clicked
     //or which product the add area button is clicked on
     selectedProduct : IProductArea;
@@ -47,14 +53,90 @@ export class JobFormComponent{
             expiry_date: [30, ]
         })
 
-        this.client = this._clientService.getClient()
+        //get the client's info
+        this.client = this._clientService.getClient();
+
+        //checks if the job is an estimate or job order if none redirects user
         this.route.params.subscribe((param : any)=>{
                this.title = (param['isJob'] == 'true')?'Job Order': 'Estimate'
                if(this.client == null && ( param['isJob'] != 'true' || param['isJob'] != 'false') ){
                     this.router.navigate(['/app/job/view/'])
                }
+               
+                //gets client's none area
+                this.getAreas();
         })
+
+        //TEST: 
+        //this.populateForm(6);
         
+    }
+
+    /**
+     * gets all the areas specificto the client
+     */
+    getAreas(){
+        this._clientService.findAllAreas(this.client).subscribe((res)=>{
+            for(let i = 0; i < res.data.length;i++ ){
+                if(res.data[i].area_name == "None"){
+                    this.noArea = res.data[i]
+                    continue;
+                }
+                this.areas.push(res.data[i])
+            }
+        });
+    }
+
+
+    /**
+     * TODO: Finish the implementation of this function
+     * populates form from estimate/job order id
+     */
+    populateForm(id : number){
+        this._jobService.findOne(id).subscribe(res => {
+            let job = res.data[0];
+            this.job = job;
+            this.serviceList = job.job_services;
+            this.notesList = job.job_notes;
+
+            let productAreas : Array<IProductArea>;
+            //pass products
+            for(let i=0; i < job.job_areas.length; i++){
+                let product : IProduct;
+                let areas : Array<IArea> = [];
+                let tempProductArea : IProductArea;
+                areas.push(job.job_areas[i].areas);
+                product = job.job_areas[i].product_area_usage[0].products;
+                product.quantity = job.job_areas[i].product_area_usage[0].quantity;
+                product.selling_cost = job.job_areas[i].product_area_usage[0].selling_cost;
+                product.unit_cost = job.job_areas[i].product_area_usage[0].unit_cost;
+                product.tax = job.job_areas[i].product_area_usage[0].tax;
+                product.discount = job.job_areas[i].product_area_usage[0].discount;
+                product.tax_type = job.job_areas[i].product_area_usage[0].tax_type;
+                product.discount_type = job.job_areas[i].product_area_usage[0].discount_type;
+                tempProductArea = { product: product, areas: areas };
+                console.log(tempProductArea)
+                if(this.productList.length <= 0){ this.productList.push(tempProductArea); }
+                
+                let counter = 0;
+                for(let i = 0; i < this.productList.length; i++){
+                    if(tempProductArea.product == this.productList[i].product){
+                        counter++;
+                    }
+                   // if(counter )
+                    this.productList.push(tempProductArea);
+                }
+
+                for(let i = 0; i < this.productList.length; i++){
+                    
+                    for(let x = 0; x < this.productList[i].areas.length; x++){
+                        if(this.productList[i].areas[x] == tempProductArea.areas[0]){
+
+                        }
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -65,13 +147,14 @@ export class JobFormComponent{
         if(this.technicianNote.trim().length > 0){ this.notesList.push({details:this.technicianNote, note_type: 'Technician'}) }
         if(this.clientNote.trim().length > 0){ this.notesList.push({details : this.clientNote, note_type: 'Client'}) }
     }
+
     /**
      * ensure area "none" is applied to products with no area selected
      */
     checkForProductsWithoutAreas(){
         for(let i =0; i < this.productList.length; i++){
             if(this.productList[i].areas.length == 0){
-                this.productList[i].areas.push({id: 1})
+                this.productList[i].areas.push({id:this.noArea.id})
             }
         }
     }
@@ -80,14 +163,16 @@ export class JobFormComponent{
      * send form data to api
      */
     submit(){
-        
+ 
         if(!this.validate()) { return}
         this.checkForProductsWithoutAreas()
         this.checkForNotesEntered()
         let days = this.jobOrderForm.controls['expiry_date'].value;
         let received_date = this.jobOrderForm.controls['received_date'].value
         let date = new Date();
-        let newDate = new Date(date.setTime( date.getTime() + days * 86400000 ));
+        let newDate = new Date(date.setTime(date.getTime() + days * 86400000 ));
+        console.log(newDate.toISOString().slice(0, 19).replace('T', ' '));
+        return;
         this.job = this.jobOrderForm.value
         this.job.type = this.title
         this.job.fk_job_status_id = (this.title == "Estimate")?1:2
@@ -97,9 +182,9 @@ export class JobFormComponent{
         this.job.services = this.serviceList
         this.job.notes = this.notesList
         console.log(this.job)
-        this._jobService.insert(this.job).subscribe(res => {
-            console.log(res)
-        })
+      //  this._jobService.insert(this.job).subscribe(res => {
+       //     console.log(res)
+        //})
     }
 
     /**
@@ -118,6 +203,7 @@ export class JobFormComponent{
         }
         return true
     }
+
     /**
      * Maps and calculates service charges
      */
@@ -280,6 +366,7 @@ export class JobFormComponent{
     setSelectedProduct(product : IProductArea){
         this.selectedProduct = product;
     }
+
 
 
     /**

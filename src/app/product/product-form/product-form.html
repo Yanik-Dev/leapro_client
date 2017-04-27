@@ -60,13 +60,13 @@
         <div class="form-group">
             <label for="details">Usage Measurement</label>
             <div class="select" >
-                <select formControlName="usage_type">
+                <select formControlName="usage_unit">
                     <option  disabled selected>Choose Usage Unit</option>
                     <option value="Area">Area</option>
-                    <option value="Volume">Choose Usage Unit</option>
+                    <option value="Volume">Volume</option>
                 </select>
             </div>            
-             <span class="not-valid" *ngIf="productForm.controls['usage_type'].hasError('required') && (productForm.controls['usage_type'].dirty || productForm.controls['usage_type'].touched)">Required field </span>
+             <span class="not-valid" *ngIf="productForm.controls['usage_unit'].hasError('required') && (productForm.controls['usage_unit'].dirty || productForm.controls['usage_unit'].touched)">Required field </span>
         </div>
         <div class="form-group">
             <label for="">Unit Cost</label>

@@ -21,6 +21,7 @@ export class ClientService{
                   .map(value => value.json())
                   .catch(err => 'Server error');
     }    
+    
     /**
      * returns all clients
      * @return Observable<IClient[]>
@@ -64,7 +65,20 @@ export class ClientService{
        
     }
 
-    
+    /**
+     * returns all area for a specific client
+     */
+    findAllAreas(client : IClient) : any{
+        if(client.customer_type == "C"){
+            return this._httpClient.get(Backend.ROUTES.CLIENT.commercial.areas+"commercial/clients/companies/branches/"+client.id+"/areas")
+                   .map(value => value.json())
+                   .catch(err => err.json())
+        }else if(client.customer_type == "R"){
+            return this._httpClient.get(Backend.ROUTES.CLIENT.resident.areas+"residential/clients/"+client.id+"/areas")
+                   .map(value => value.json())
+                   .catch(err => err.json())
+        }
+    }
     /** 
      * get client
      */

@@ -4,6 +4,8 @@ import { IService } from '../../models/service';
 import { IProductArea } from '../../models/product';
 import { INote } from '../../models/note';
 import { Charge } from '../../models/charge';
+import { IJob } from "app/models/job";
+import { JobService } from "../job.service";
 @Component({
 	selector: 'job-preview',
 	templateUrl: './job-preview.html',
@@ -14,16 +16,20 @@ export class JobPreviewComponent implements OnInit, OnDestroy{
     serviceList : Array<IService> = [];
     productList : Array<IProductArea> = [];
       notesList : Array<INote> = [];
-
+      job : IJob;
     //keeps track of the product to which to the quantity button is clicked
     //or which product the add area button is clicked on
     selectedProduct : IProductArea;
 
-    constructor(private route: ActivatedRoute){}
+    constructor(private _route: ActivatedRoute, private _jobService : JobService){}
 
     ngOnInit(){
-        this.route.params.subscribe((param : any)=>{
-               //this.job.id = param['id'];
+        this._route.params.subscribe((param : any)=>{
+               this.job.id = param['id'];
+               this._jobService.findOne(this.job.id).subscribe((res)=>{
+                        this.job = res;
+                        
+               })
         })
     }
 

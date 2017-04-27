@@ -82,22 +82,46 @@ export class ProductAreaTableComponent implements OnInit{
         )
     }
 
+    /**
+     * filters datagrid
+     * @param state 
+     */
     refresh(state: State) {
-       // this.loading = true;
-        // convert the filters from an array to a map,
-        // because that's what our backend-calling service is expecting
+       this.loading = true;
         let filters:{[prop:string]: any} = {};
         
         if (state.filters) {
             for (let filter of state.filters) {
                 let {property, value} = <{property: string, value: string}>filter;
                 filters[property] = [value];
-                console.log(filters['undefined'])
+                console.log(filters)
             }
 
         }
-     
+        this.loading = false;
     }
+
+    /**
+     * query database for products 
+     * @param name 
+     * @param category 
+     */
+    search(name: any,category:any){
+        this.records = []
+        this._productService.search(name, category).subscribe(
+            (res) => {
+               if(res.code != 200){
+                   //display errors
+                   return;
+               }
+               for(let i = 0; i < res.data.length; i++){
+                    this.records.push(res.data[i]);
+                }
+                this.loading = false;
+            }
+        )
+    }
+
     
    /**
     * unchecked all checkboxes
@@ -156,7 +180,6 @@ export class ProductAreaTableComponent implements OnInit{
      */
     editClicked(record: IProductArea){
         this.productToEdit= record.product;
-        console.log(this.productToEdit)
         this.onEditClicked.emit(record.product);
     }
 
@@ -201,7 +224,6 @@ export class ProductAreaTableComponent implements OnInit{
     calculateAreaBasedOnProduct(area : IArea){
         let size : number = 0;
         size = (area.length * area.width == 0)?area.area:area.length * area.width;
-
         size = (area.length * area.width * area.height == 0)?area.volume : area.length * area.width * area.height;
         return size;
     }

@@ -134,14 +134,7 @@
 
 <clr-modal [(clrModalOpen)]="serviceListOpened" [clrModalSize]="'xl'" [clrModalClosable]="false">
     <h3 class="modal-title">Service list</h3>
-    <div class="modal-body">
-       
-        <search-filter [searchBarPlaceholder]="'Search Services'"
-                        [optionPlaceholder]="'Select Category'" 
-                        [buttonTitle]="'New'"
-                        (buttonClickHandler)="servieFormOpened=true"></search-filter>
-    
-
+    <div class="modal-body">   
         <service-table (editClickedHandler)="service = $event; servieFormOpened=true" #serviceTable></service-table>
     </div>
     <div class="modal-footer">
@@ -216,7 +209,7 @@
 <clr-modal [(clrModalOpen)]="areaModalOpened" [clrModalSize]="'l'" [clrModalClosable]="false">
     <h3 class="modal-title">Area </h3>
     <div class="modal-body">
-        <area-table #areaTable></area-table>
+        <area-table [areas]="areas" #areaTable></area-table>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-link" (click)="productTable.setProduct(setSelectedProductArea(areaTable.checkedAreas));

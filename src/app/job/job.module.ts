@@ -19,6 +19,7 @@ import {ClientSelectionComponent} from './client-selection/client-selection.comp
 import { ScheduleModule } from '../schedule/schedule.module';
 import { ClientService } from "../client/client.service";
 import { JobService } from "./job.service";
+import { SimpleTinyComponent } from "../tinymce/tinymce.component";
 @NgModule({
     imports: [
        BrowserModule, 
@@ -35,7 +36,7 @@ import { JobService } from "./job.service";
        ProductModule,
        AreaModule
      ],
-    exports: [JobFormComponent, JobGridComponent, ClientSelectionComponent, JobPreviewComponent],
+    exports: [JobFormComponent,SimpleTinyComponent, JobGridComponent, ClientSelectionComponent, JobPreviewComponent],
     declarations:[
            JobFormComponent, 
            JobHomeComponent,
@@ -43,7 +44,8 @@ import { JobService } from "./job.service";
            JobPreviewComponent, 
            JobHolderComponent, 
            FreeInputComponent,
-           ClientSelectionComponent
+           ClientSelectionComponent,
+           SimpleTinyComponent
     ],
     providers:[ClientService, JobService]
 })

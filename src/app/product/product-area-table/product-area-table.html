@@ -18,7 +18,7 @@
              </div>
         </clr-dg-cell>
         <clr-dg-cell>{{product.product.name}}</clr-dg-cell>
-        <clr-dg-cell>{{product.product.category}}</clr-dg-cell>
+        <clr-dg-cell>{{product.product.category_name}}</clr-dg-cell>
         <clr-dg-cell *ngIf="showTotalArea">{{product.product.quantity}} <clr-icon shape="edit" size="16" (click)="addQuantity(product)"></clr-icon></clr-dg-cell>
         <clr-dg-cell *ngIf="showTotalArea"> {{calculateTotalSize(product)}} <clr-icon shape="add" size="16" (click)="addArea(product)"></clr-icon></clr-dg-cell>
         <clr-dg-cell>{{product.product.selling_cost}}</clr-dg-cell>
@@ -32,7 +32,7 @@
     </clr-dg-row>
     <clr-dg-footer>
         {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{total}} products
-        <clr-dg-pagination #pagination [clrDgTotalItems]="total" [clrDgPageSize]="20"></clr-dg-pagination>
+        <clr-dg-pagination #pagination [clrDgTotalItems]="total" [clrDgPageSize]="10"></clr-dg-pagination>
     </clr-dg-footer>
 </clr-datagrid>
 

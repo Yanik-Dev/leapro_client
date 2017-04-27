@@ -40,7 +40,7 @@ export class Charge{
         charge.name = service.name;
         charge.description = service.description;
         charge.cost = (service.man_hours ==0)?service.unit_charge:
-                        service.man_hours * service.man_hours;
+                        service.man_hours * service.unit_charge;
         charge.discount = charge.cost * (service.discount/100);
         charge.quantity = service.man_hours;
         charge.tax = charge.cost * (service.tax/100);

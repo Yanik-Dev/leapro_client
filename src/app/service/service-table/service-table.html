@@ -1,82 +1,41 @@
-<!-- service table -->
-<table class="table">
-    <thead>
-        <tr>
-            <th *ngIf="showCheckboxes"></th>
-            <th>Name</th>
-            <th>Discription</th>
-            <th>Category</th>
-            <th>Man hours</th>
-            <th>Unit Charge</th>
-            <th>Taxed Amount</th>
-            <th>Discounted Amount</th>
-            <th>Total</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let record of records; let i = index">
-            <td *ngIf="showCheckboxes">
-                <div class="checkbox" >
-                        <input id="checkbox-{{i}}" type="checkbox" [(ngModel)]="checkedItems[i]" (click)="onChecked(record)">
-                        <label for="checkbox-{{i}}"></label>
-                </div>
-            </td>
-            <td>{{record.name}}</td>
-            <td>{{record.description}}</td>
-            <td>{{record.fk_category_id}}</td>
-            <td>{{record.man_hours}}</td>
-            <td>
-                
-            </td>
-            <td>{{record.tax}}</td>
-            <td>{{record.discount}}</td>
-            <td>100.0</td>
-            <td>
-                <button class="btn btn-link btn-sm" (click)="onEditClicked(record)">
-                        <clr-icon shape="edit" size="16"></clr-icon>
-                </button>
-            </td>
-        </tr>
-    </tbody>
-</table>
-<!-- /service table -->
+
 <clr-datagrid  (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading" >
     <clr-dg-column></clr-dg-column>
     <clr-dg-column [clrDgField]="'name'">Name</clr-dg-column>
     <clr-dg-column [clrDgField]="'category'" >Category</clr-dg-column>
     <clr-dg-column >Description</clr-dg-column>
-    <clr-dg-column >Man hour</clr-dg-column>
     <clr-dg-column >Unit Charge</clr-dg-column>
+    <clr-dg-column >Man hour</clr-dg-column>
     <clr-dg-column >Taxed Amount</clr-dg-column>
     <clr-dg-column >Discounted Amount</clr-dg-column>
     <clr-dg-column >Total</clr-dg-column>
     <clr-dg-column ><clr-icon shape="add" size="24" (click)="opened = true;"></clr-icon></clr-dg-column>
-     <clr-dg-placeholder>We couldn't find any products!</clr-dg-placeholder>
+     <clr-dg-placeholder>We couldn't find any services!</clr-dg-placeholder>
     <clr-dg-row *clrDgItems="let record of records; let i = index">
         <clr-dg-cell>
              <div class="checkbox" >
-                <input id="checkbox-{{i}}" type="checkbox" [(ngModel)]="checkedItems[i]" (click)="onChecked(product)">
+                <input id="checkbox-{{i}}" type="checkbox" [(ngModel)]="checkedItems[i]" (click)="onChecked(record)">
                 <label for="checkbox-{{i}}"></label>
              </div>
         </clr-dg-cell>
         <clr-dg-cell>{{record.name}}</clr-dg-cell>
-        <clr-dg-cell>{{product.category}}</clr-dg-cell>
+        <clr-dg-cell> {{record.category_name}}</clr-dg-cell>
         <clr-dg-cell >{{record.description}} </clr-dg-cell>
+        <clr-dg-cell >{{record.unit_charge}} </clr-dg-cell>
          <clr-dg-cell>{{record.man_hours}}</clr-dg-cell>
         <clr-dg-cell>{{record.tax}}</clr-dg-cell>
         <clr-dg-cell>{{record.discount}}</clr-dg-cell>
-        <clr-dg-cell>$ {{record.man_hours +  }}</clr-dg-cell>
+        <clr-dg-cell>{{record.man_hours * record.unit_charge}}</clr-dg-cell>
         <clr-dg-cell>
-           <clr-icon shape="edit" size="16" (click)="editClicked(product); opened = true;"></clr-icon>
+           <clr-icon shape="edit" size="16" (click)="editClicked(record); opened = true;"></clr-icon>
         </clr-dg-cell>
     </clr-dg-row>
     <clr-dg-footer>
-        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{total}} products
+        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{total}} services
         <clr-dg-pagination #pagination [clrDgTotalItems]="total" [clrDgPageSize]="20"></clr-dg-pagination>
     </clr-dg-footer>
 </clr-datagrid>
 
- <product-form   [product]="productToEdit" 
+ <service-form   [service]="serviceToEdit" 
                         [opened]="opened"
-                        (closed) = "opened = $event" ></product-form>
+                        (closed) = "opened = $event" ></service-form>

@@ -3,6 +3,7 @@ import { IProductArea } from './product'
 import { IService } from './service'
 
 export interface IJob{
+    id?:number;
     type? : String;
     summary? : String;
     fk_job_status_id? : number;

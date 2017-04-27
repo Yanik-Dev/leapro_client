@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ServicesService } from './../services.service';
 import { IService } from '../../models/service';
+import { State } from "clarity-angular";
 @Component({
     selector: 'service-table',
     templateUrl: 'service-table.html'
@@ -13,6 +14,10 @@ export class ServiceTableComponent implements OnInit{
     checkedItems : Array<boolean>=[];
     
     records : Array<IService> =[];
+
+    serviceToEdit : IService
+
+    loading = false;
 
     /**
      * determine if checkboxes are to be shown
@@ -43,6 +48,25 @@ export class ServiceTableComponent implements OnInit{
     }
 
     /**
+     * filters datagrid
+     * @param state 
+     */
+    refresh(state: State) {
+       this.loading = true;
+        let filters:{[prop:string]: any} = {};
+        
+        if (state.filters) {
+            for (let filter of state.filters) {
+                let {property, value} = <{property: string, value: string}>filter;
+                filters[property] = [value];
+                console.log(filters)
+            }
+
+        }
+        this.loading = false;
+    }
+    
+    /**
      * Refresh the table
      */
     reload(){
@@ -60,10 +84,24 @@ export class ServiceTableComponent implements OnInit{
     }
 
     /**
-     * searches the table 
+     * query database for products 
+     * @param name 
+     * @param category 
      */
-    search(query: any){
-        //search
+    search(name: any,category:any){
+        this.records = []
+        this._servicesService.search(name, category).subscribe(
+            (res) => {
+               if(res.code != 200){
+                   //display errors
+                   return;
+               }
+               for(let i = 0; i < res.data.length; i++){
+                    this.records.push(res.data[i]);
+                }
+                this.loading = false;
+            }
+        )
     }
 
 
@@ -101,7 +139,7 @@ export class ServiceTableComponent implements OnInit{
      * 
      * @param any record
      */
-    onEditClicked(record: IService){
-        this.editClickedHandler.emit(record);
+    editClicked(record: IService){
+        this.serviceToEdit = record;
     }
 }

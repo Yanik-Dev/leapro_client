@@ -1,4 +1,5 @@
 export interface IClient{
+     id?:number
      first_name? : String 
      last_name? : String 
      other_name? : String

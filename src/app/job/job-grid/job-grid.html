@@ -1,36 +1,25 @@
-<table class="table table-compact">
-    <thead>
-        <tr>
-            <th class="left">{{jobType}} Number</th>
-            <th>{{jobType}} Smummary</th>
-            <th>{{jobType}} Status</th>
-            <th>Date Made</th>
-            <th class="left">Date Completed</th>
-            <th class="left"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="left">12345</td>
-            <td>Nondisclosed countryside</td>
-            <td> - </td>
-            <td class="left">09/12/2016</td>
-            <td class="left">09/12/2016</td>
-            <td class="left" >
-                <clr-icon (click)="editEditClicked()" *ngIf="showEditColumn" shape="edit" class="is-highlight"></clr-icon>
-                <clr-icon (click)="editViewClicked()" *ngIf="showViewColumn" class="is-success" shape="caret right"></clr-icon>
-            </td>
-        </tr>
-        <tr>
-            <td class="left">12300</td>
-            <td>Nondisclosed countryside</td>
-            <td> - </td>
-            <td>01/07/2016</td>
-            <td class="left">02/07/2016</td>
-            <td class="left" >
-                <clr-icon (click)="editEditClicked()" *ngIf="showEditColumn" shape="edit" class="is-highlight"></clr-icon>
-                <clr-icon (click)="editViewClicked()" *ngIf="showViewColumn" class="is-success" shape="caret right"></clr-icon>
-            </td>
-        </tr>
-    </tbody>
-</table>
+
+<clr-datagrid  (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading" >
+    <clr-dg-column [clrDgField]="'id'">id</clr-dg-column>
+    <clr-dg-column >Summary</clr-dg-column>
+    <clr-dg-column >Received Date</clr-dg-column>
+    <clr-dg-column >Expiry Date</clr-dg-column>
+    <clr-dg-column >Status</clr-dg-column>
+    <clr-dg-column ></clr-dg-column>
+     <clr-dg-placeholder>We couldn't find any jobs!</clr-dg-placeholder>
+    <clr-dg-row *clrDgItems="let job of records; let i = index">
+        <clr-dg-cell>{{job.id}}</clr-dg-cell>
+        <clr-dg-cell>{{job.summary}}</clr-dg-cell>
+        <clr-dg-cell>{{job.received_date}}</clr-dg-cell>
+        <clr-dg-cell>{{job.expiry_date}}</clr-dg-cell>
+         <clr-dg-cell>{{job.status}}</clr-dg-cell>
+         <clr-dg-cell>
+            <clr-icon (click)="editEditClicked()" *ngIf="showEditColumn" shape="edit" class="is-highlight"></clr-icon>
+            <clr-icon (click)="editViewClicked()" *ngIf="showViewColumn" class="is-success" shape="caret right"></clr-icon>
+        </clr-dg-cell>
+    </clr-dg-row>
+    <clr-dg-footer>
+        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{total}} jobs
+        <clr-dg-pagination #pagination [clrDgTotalItems]="total" [clrDgPageSize]="10"></clr-dg-pagination>
+    </clr-dg-footer>
+</clr-datagrid>

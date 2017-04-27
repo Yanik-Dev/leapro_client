@@ -11,23 +11,13 @@ export class AreaTableComponent{
     //checkbox handler
     checkedItems : Array<boolean>=[];
 
-    areas : Array<IArea> =[];
+    @Input() areas : Array<IArea> =[];
 
     @Output() checkedValuesHandler = new EventEmitter();
     @Output() editClickedHandler = new EventEmitter();
 
-    constructor(private _areaService : AreaService){
-    }
+    constructor(private _areaService : AreaService){}
 
-
-    ngOnInit(){
-       this._areaService.get().subscribe((data)=>{
-           this.areas = data.json();
-           for(let i = 0; i < data.json().length; i++){
-                 this.checkedItems.push(false);
-            }
-       });
-    }
 
    /**
     * unchecked all checkboxes
@@ -56,8 +46,8 @@ export class AreaTableComponent{
     }
 
     onFinished(){
-        //TODO: emit checked services
-        this.checkedValuesHandler.emit();
+        //TODO: emit checked areas
+        this.checkedValuesHandler.emit(this.checkedAreas);
     }
     
     /**

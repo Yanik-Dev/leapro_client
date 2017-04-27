@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChange } from '@angular/core';
+import { Component, Input, SimpleChange, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { IService } from '../../models/service';
 @Component({
@@ -11,7 +11,12 @@ export class ServiceFormComponent{
     @Input() service : IService;
 
     serviceForm : FormGroup;
+    
+    
+    @Input() opened : boolean = false;
 
+    @Output() closed = new EventEmitter();
+    
     constructor(private _formBuilder: FormBuilder){
         
         this.serviceForm = this._formBuilder.group({
@@ -30,13 +35,13 @@ export class ServiceFormComponent{
 
 
     ngOnChanges(change : SimpleChange){
-        let value = <IService> change['service'].currentValue;
+        let value = (change['service'])? <IService> change['service'].currentValue: this.service;
         if(value){
             this.serviceForm.patchValue(
                 {
                    id : value.id,
                    name : value.name,
-                   categoryId : value.fk_category_id,
+                   fk_category_id : value.fk_category_id,
                    description: value.description,
                    man_hours : value.man_hours,
                    unit_charge : value.unit_charge,
@@ -84,6 +89,15 @@ export class ServiceFormComponent{
                 :(this.serviceForm.controls['tax_type'].value=="F") ? this.serviceForm.controls['tax'].value
                 : (this.serviceForm.controls['id'].value > 0) ? this.service.tax: 0;
 
+    }
+
+    /**
+     * closed modal form
+     */
+    close(){
+        this.reset()
+        this.closed.emit(false)
+        this.opened = false;
     }
 
     /**

@@ -47,4 +47,15 @@ export class ProductService{
                    .catch((error)=> error.json().error)
     }
     
+    /**
+     * query database for search results
+     * @param name
+     * @param category
+     * @return Observable
+     */
+    search(name : String, category : String): any{
+       return this._httpClient.get(Backend.ROUTES.PRODUCT.search+"?name="+name+"&category="+category)
+                   .map(value=> value.json())
+                   .catch((error)=> error.json().error)  
+    }
 }

@@ -22,5 +22,5 @@ export interface IProduct {
 export interface IProductArea {
     id? : number;
     product? : IProduct;
-    areas?: Array<IArea>
+    areas?: Array<IArea> 
 }

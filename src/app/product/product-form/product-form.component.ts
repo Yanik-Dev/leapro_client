@@ -45,32 +45,32 @@ export class ProductFormComponent{
             application: [, Validators.compose([Validators.maxLength(20)])],
             dilution: [, Validators.compose([Validators.maxLength(20)])],
             fk_unit_id: [,Validators.compose([Validators.required])],
-            usage_type: [,Validators.compose([Validators.required])]
+            usage_unit: [,Validators.compose([Validators.required])]
         })
        
     }
     
     ngOnChanges(change : SimpleChange){
-        let value = (change['product'])?<IProduct> change['product'].currentValue: null;
+        let value = (change['product'])?<IProduct> change['product'].currentValue: this.product;
         console.log(value);
         if(value){
             this.productForm.patchValue(
                 {
                 id : value.id,
                 name : value.name,
-                categoryId : value.fk_category_id,
+                fk_category_id : value.fk_category_id,
                 description: value.description,
                 application: value.application,
                 dilution: value.dilution,
                 quantity : value.quantity,
-                unitId : value.fk_unit_id,
-                unitCost: value.unit_cost,
-                sellingPrice: value.selling_cost,
+                fk_unit_id : value.fk_unit_id,
+                unit_cost: value.unit_cost,
+                selling_cost: value.selling_cost,
                 discount : value.discount,              
-                discountType : value.discount_type,               
+                discount_type : value.discount_type,               
                 tax : value.tax,               
-                taxType : value.tax_type,   
-
+                tax_type : value.tax_type,   
+                usage_unit : value.usage_unit
                 }
             )
         }

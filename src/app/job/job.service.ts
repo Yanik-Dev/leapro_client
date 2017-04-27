@@ -12,6 +12,7 @@ export class JobService{
 
 
     constructor(private _httpClient: HttpClient){}
+
     /**
      * returns all jobs
      * @return Observable<Ijob[]>
@@ -21,6 +22,17 @@ export class JobService{
                   .map(value => value.json())
                   .catch(err => 'Server error');
     }
+    
+    /**
+     * returns one job
+     * @return Observable
+     */
+    findOne(id : number) : any{
+        return this._httpClient.get(Backend.ROUTES.JOB.findOne+id)
+                  .map(value => value.json())
+                  .catch(err => 'Server error');
+    }
+
     
 
     /**
@@ -34,7 +46,14 @@ export class JobService{
                    .catch(err => err.json())
     }
 
-
+    /**
+     * find the client that the job belongs to
+     */
+    getClient(id : number) :any{
+        return this._httpClient.get(Backend.ROUTES.JOB.findOne+id)
+                  .map(value => value.json())
+                  .catch(err => 'Server error');
+    }
 
     /**
      * updates a job model in the database
