@@ -172,7 +172,6 @@ export class JobFormComponent{
         let date = new Date();
         let newDate = new Date(date.setTime(date.getTime() + days * 86400000 ));
         console.log(newDate.toISOString().slice(0, 19).replace('T', ' '));
-        return;
         this.job = this.jobOrderForm.value
         this.job.type = this.title
         this.job.fk_job_status_id = (this.title == "Estimate")?1:2
@@ -182,15 +181,38 @@ export class JobFormComponent{
         this.job.services = this.serviceList
         this.job.notes = this.notesList
         console.log(this.job)
-      //  this._jobService.insert(this.job).subscribe(res => {
-       //     console.log(res)
-        //})
+        this._jobService.insert(this.job).subscribe(res => {
+           console.log(res)
+        })
     }
 
     /**
      * validate form before sending data to api
      */
     validate(){
+        let now = new Date();
+        let receivedDate = new Date(this.jobOrderForm.controls['received_date'].value)
+        let expiryDays = this.jobOrderForm.controls['expiry_date'].value;
+        if(!this.jobOrderForm.controls['summary'].value){
+             this.error.isValid= true;
+            this.error.message = "A Summary of 10 letters or more is required for the "+ this.title+""
+            return false
+        }
+        else if(this.jobOrderForm.controls['summary'].value.trim().length < 10){
+            this.error.isValid= true;
+            this.error.message = "A Summary of 10 letters or more is required for the "+ this.title+""
+            return false
+        }
+        if(expiryDays < 1 || expiryDays > 30){
+            this.error.isValid= true;
+            this.error.message = "The number of days to expiry cannot be less than 1 or greater than 30"
+            return false;
+        }
+        if(now.getTime() < receivedDate.getTime() ){
+            this.error.isValid= true;
+            this.error.message = "Received date cannot be a future date"
+            return false;
+        }
         if(this.serviceList.length == 0){
             this.error.isValid= true;
             this.error.message = "At least one service is required"
