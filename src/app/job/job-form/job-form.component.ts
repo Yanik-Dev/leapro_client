@@ -10,6 +10,7 @@ import { ClientService } from '../../client/client.service';
 import { JobService } from '../job.service';
 import { IClient } from '../../models/client';
 import { IArea } from "app/models/area";
+import { Utility } from '../../common/util'
 
 
 @Component({
@@ -170,13 +171,12 @@ export class JobFormComponent{
         let days = this.jobOrderForm.controls['expiry_date'].value;
         let received_date = this.jobOrderForm.controls['received_date'].value
         let date = new Date();
-        let newDate = new Date(date.setTime(date.getTime() + days * 86400000 ));
-        console.log(newDate.toISOString().slice(0, 19).replace('T', ' '));
+        let expiryDate = Utility.dateToSqlForm(new Date(date.setTime(date.getTime() + days * 86400000 )));
         this.job = this.jobOrderForm.value
         this.job.type = this.title
         this.job.fk_job_status_id = (this.title == "Estimate")?1:2
-        this.job.expiry_date = newDate.toLocaleDateString('en-US')
-        this.job.received_date = (received_date == null)? null: new Date(received_date).toLocaleDateString()
+        this.job.expiry_date = expiryDate
+        this.job.received_date = (received_date == null)? Utility.dateToSqlForm(new Date): Utility.dateToSqlForm(new Date(received_date))
         this.job.products = this.productList
         this.job.services = this.serviceList
         this.job.notes = this.notesList
