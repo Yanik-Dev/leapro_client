@@ -2,12 +2,31 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ServicesService } from './../services.service';
 import { IService } from '../../models/service';
 import { State } from "clarity-angular";
+import {StringFilter} from "clarity-angular";
+
+/**
+ * DataGrid filters
+ */
+class ServiceNameFilter implements StringFilter<IService> {
+    accepts(Service: IService, search: string):boolean {
+        return Service.name.toLowerCase().indexOf(search) >= 0;
+    }
+}
+
+class ServiceCategoryFilter implements StringFilter<IService> {
+    accepts(Service: IService, search: string):boolean {
+        return Service.category.toLowerCase().indexOf(search) >= 0;
+    }
+}
+
 @Component({
     selector: 'service-table',
     templateUrl: 'service-table.html'
 })
 export class ServiceTableComponent implements OnInit{
     
+    private serviceNameFilter = new ServiceNameFilter();
+    private serviceCategoryFilter = new ServiceCategoryFilter();
     
     checkedRecords : Array<IService> = [];
     //checkbox handler
@@ -84,7 +103,7 @@ export class ServiceTableComponent implements OnInit{
     }
 
     /**
-     * query database for products 
+     * query database for Services 
      * @param name 
      * @param category 
      */

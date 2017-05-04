@@ -1,18 +1,13 @@
-<!-- unit table -->
+<!-- Category table -->
 <clr-datagrid  [clrDgLoading]="loading" >
-    <clr-dg-column [clrDgField]="'name'">
-        Unit Code
-       <clr-dg-string-filter [clrDgStringFilter]="unitCodeFilter"></clr-dg-string-filter>
-    </clr-dg-column>
-    <clr-dg-column [clrDgField]="'category'" >
+    <clr-dg-column [clrDgField]="'name'" >
         Name
-       <clr-dg-string-filter [clrDgStringFilter]="unitNameFilter"></clr-dg-string-filter>
+       <clr-dg-string-filter [clrDgStringFilter]="categoryNameFilter"></clr-dg-string-filter>
     </clr-dg-column>
     <clr-dg-column >Description</clr-dg-column>
     <clr-dg-column ><clr-icon shape="add" size="24" (click)="opened = true;"></clr-icon></clr-dg-column>
      <clr-dg-placeholder>We couldn't find any services!</clr-dg-placeholder>
-    <clr-dg-row *clrDgItems="let record of units; let i = index">
-        <clr-dg-cell>{{record.code}}</clr-dg-cell>
+    <clr-dg-row *clrDgItems="let record of categories; let i = index">
         <clr-dg-cell> {{record.name}}</clr-dg-cell>
         <clr-dg-cell >{{record.description}} </clr-dg-cell>
         <clr-dg-cell>
@@ -20,13 +15,13 @@
         </clr-dg-cell>
     </clr-dg-row>
     <clr-dg-footer>
-        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{total}} units
+        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{total}} Categories
         <clr-dg-pagination #pagination [clrDgTotalItems]="total" [clrDgPageSize]="20"></clr-dg-pagination>
     </clr-dg-footer>
 </clr-datagrid>
 
- <unit-form   [unit]="unitToEdit" 
+ <category-form   [category]="categoryToEdit" 
                         [opened]="opened"
-                        (closed) = "opened = $event" ></unit-form>
+                        (closed) = "opened = $event" ></category-form>
 
-<!-- /unit table -->
+<!-- /Category table -->

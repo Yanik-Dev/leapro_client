@@ -1,8 +1,14 @@
 
-<clr-datagrid  (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading" >
+<clr-datagrid  [clrDgLoading]="loading" >
     <clr-dg-column></clr-dg-column>
-    <clr-dg-column [clrDgField]="'name'">Name</clr-dg-column>
-    <clr-dg-column [clrDgField]="'category'" >Category</clr-dg-column>
+    <clr-dg-column [clrDgField]="'name'">
+        Name
+       <clr-dg-string-filter [clrDgStringFilter]="serviceNameFilter"></clr-dg-string-filter>
+    </clr-dg-column>
+    <clr-dg-column [clrDgField]="'category'" >
+        Category
+       <clr-dg-string-filter [clrDgStringFilter]="serviceCategoryFilter"></clr-dg-string-filter>
+    </clr-dg-column>
     <clr-dg-column >Description</clr-dg-column>
     <clr-dg-column >Unit Charge</clr-dg-column>
     <clr-dg-column >Man hour</clr-dg-column>

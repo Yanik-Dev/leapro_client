@@ -52,7 +52,6 @@ export class ProductFormComponent{
     
     ngOnChanges(change : SimpleChange){
         let value = (change['product'])?<IProduct> change['product'].currentValue: this.product;
-        console.log(value);
         if(value){
             this.productForm.patchValue(
                 {

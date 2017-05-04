@@ -3,6 +3,22 @@ import { IProduct, IProductArea } from '../../models/product';
 import { IArea } from '../../models/area';
 import { ProductService } from '../product.service';
 import {State} from "clarity-angular";
+import {StringFilter} from "clarity-angular";
+
+/**
+ * DataGrid filters
+ */
+class ProductNameFilter implements StringFilter<IProductArea> {
+    accepts(product: IProductArea, search: string):boolean {
+        return product.product.name.toLowerCase().indexOf(search) >= 0;
+    }
+}
+
+class ProductCategoryFilter implements StringFilter<IProductArea> {
+    accepts(product: IProductArea, search: string):boolean {
+        return product.product.category.toLowerCase().indexOf(search) >= 0;
+    }
+}
 
 @Component({
     selector: 'product-area-table',
@@ -10,6 +26,9 @@ import {State} from "clarity-angular";
 })
 export class ProductAreaTableComponent implements OnInit{
     
+    private productNameFilter  =new ProductNameFilter();
+    private productCategoryFilter  =new ProductCategoryFilter();
+
     loading: boolean = true;
     checkedRecords : Array<IProductArea> = [];
     //checkbox handler
@@ -82,24 +101,6 @@ export class ProductAreaTableComponent implements OnInit{
         )
     }
 
-    /**
-     * filters datagrid
-     * @param state 
-     */
-    refresh(state: State) {
-       this.loading = true;
-        let filters:{[prop:string]: any} = {};
-        
-        if (state.filters) {
-            for (let filter of state.filters) {
-                let {property, value} = <{property: string, value: string}>filter;
-                filters[property] = [value];
-                console.log(filters)
-            }
-
-        }
-        this.loading = false;
-    }
 
     /**
      * query database for products 

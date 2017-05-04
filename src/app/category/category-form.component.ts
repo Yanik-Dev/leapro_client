@@ -1,14 +1,14 @@
 import { Component,Input, Output, EventEmitter, SimpleChange } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { Unit } from '../models/unit';
-import { UnitService } from './unit.service';
+import { Category } from '../models/category';
+import { CategoryService } from './category.service';
 
 @Component({
-    selector: 'unit-form',
-    templateUrl: 'unit-form.html',
+    selector: 'category-form',
+    templateUrl: 'category-form.html',
 })
-export class UnitFormComponent{
-    unitForm : FormGroup;
+export class CategoryFormComponent{
+    categoryForm : FormGroup;
     error : any = {isTrue: false, message:''} 
 
     @Input() opened : boolean = false;
@@ -17,13 +17,13 @@ export class UnitFormComponent{
     /**
      * populate form fields
      */
-    @Input() unit : Unit;
+    @Input() category : Category;
 
     /**
      * Constructs reactive form
      */
-    constructor(private _formBuilder: FormBuilder, private _unitService : UnitService){
-        this.unitForm = this._formBuilder.group({
+    constructor(private _formBuilder: FormBuilder, private _categoryService : CategoryService){
+        this.categoryForm = this._formBuilder.group({
             id : [],
             name: ['',],
             code: [''],
@@ -33,18 +33,17 @@ export class UnitFormComponent{
     }
    
    /**
-    * watches the input variable "unit" and update form fields 
-    * when unit values change
+    * watches the input variable "Category" and update form fields 
+    * when Category values change
     * @param SimpleChange change array of all the Input variables
     */
    ngOnChanges(change : SimpleChange){
-        let value = (change['unit'])? <Unit> change['unit'].currentValue: this.unit;
+        let value = (change['category'])? <Category> change['category'].currentValue: this.category;
         if(value){
-            this.unitForm.patchValue(
+            this.categoryForm.patchValue(
                 {
                    id : value.id,
                    name : value.name,
-                   code : value.code,
                    description: value.description,             
                 }
             )
@@ -56,9 +55,9 @@ export class UnitFormComponent{
      * save or update the form information
      */
     save(){
-        if(this.unitForm.valid){
-           if(this.unitForm.controls.id.value > 0){
-                this._unitService.update(this.unitForm.value).subscribe(res=>{
+        if(this.categoryForm.valid){
+           if(this.categoryForm.controls.id.value > 0){
+                this._categoryService.update(this.categoryForm.value).subscribe(res=>{
                     if(res.code == 201){
                         //creation successful
                     }else{
@@ -66,7 +65,7 @@ export class UnitFormComponent{
                     }
                 });
            }else{
-                this._unitService.insert(this.unitForm.value).subscribe(res=>{
+                this._categoryService.insert(this.categoryForm.value).subscribe(res=>{
                     if(res.code == 201){
                         //creation successful
                         //clear form
@@ -88,16 +87,16 @@ export class UnitFormComponent{
      * activate validations on form fields
      */
     touchFormFields(){
-        this.unitForm.controls.name.markAsTouched({onlySelf: false})
-        this.unitForm.controls.code.markAsTouched({onlySelf: false})
-        this.unitForm.controls.description.markAsTouched({onlySelf: false})
+        this.categoryForm.controls.name.markAsTouched({onlySelf: false})
+        this.categoryForm.controls.code.markAsTouched({onlySelf: false})
+        this.categoryForm.controls.description.markAsTouched({onlySelf: false})
     }
 
     /**
      * resets form fields
      */
     reset(){
-        this.unitForm.reset();
+        this.categoryForm.reset();
     }
 
     /**

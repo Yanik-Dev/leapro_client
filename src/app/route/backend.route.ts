@@ -35,6 +35,18 @@ export const  ROUTES = {
             insert: baseUrl+"services",
             update: baseUrl+"services/",
             search: baseUrl+"services/search"
-     }
+     },
+     UNIT: {
+            get: baseUrl+"unit",
+            insert: baseUrl+"unit",
+            update: baseUrl+"unit/",
+            search: baseUrl+"unit/search"
+     },
+     CATEGORY: {
+            get: baseUrl+"category",
+            insert: baseUrl+"category",
+            update: baseUrl+"category/",
+            search: baseUrl+"category/search"
+     },
 
 }

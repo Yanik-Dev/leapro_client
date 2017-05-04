@@ -1,12 +1,33 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UnitService } from './unit.service';
 import { Unit } from '../models/unit';
+import {StringFilter} from "clarity-angular";
+
+/**
+ * DataGrid filters
+ */
+class UnitNameFilter implements StringFilter<Unit> {
+    accepts(unit: Unit, search: string):boolean {
+        return unit.name.toLowerCase().indexOf(search) >= 0;
+    }
+}
+
+class UnitCodeFilter implements StringFilter<Unit> {
+    accepts(unit: Unit, search: string):boolean {
+        return unit.code.toLowerCase().indexOf(search) >= 0;
+    }
+}
+
+
 @Component({
     selector: 'unit-table',
     templateUrl: 'unit-table.html'
 })
 export class UnitTableComponent implements OnInit{
-    
+    private unitNameFilter = new UnitNameFilter();
+    private unitCodeFilter = new UnitCodeFilter();
+
+    private unitToEdit : Unit;
     units : Array<Unit> =[];
 
     /**
@@ -48,5 +69,15 @@ export class UnitTableComponent implements OnInit{
      */
     onEditClicked(unit: Unit){
         this.editClickedHandler.emit(unit);
+    }
+
+     /**
+     * emits the record for a particular row when the
+     * edit button is clicked for that row
+     * 
+     * @param any record
+     */
+    editClicked(record: Unit){
+        this.unitToEdit = record;
     }
 }

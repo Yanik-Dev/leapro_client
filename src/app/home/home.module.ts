@@ -17,6 +17,7 @@ import { LoginModule } from '../login/login.module';
 import { JobModule } from '../job/job.module';
 import { ServiceModule } from '../service/service.module';
 import { UnitModule } from '../unit/unit.module';
+import { CategoryModule } from '../category/category.module';
 import { ProductModule } from '../product/product.module';
 import { SearchFilterModule } from '../search-filter/search-filter.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
@@ -41,7 +42,8 @@ import { GoogleApiModule } from '../google-api/google-api.module';
         DashboardModule, 
         UnitModule,
         ProductModule,
-        NotificationModule
+        NotificationModule,
+        CategoryModule
     ],
     exports: [  
         HomeComponent, 

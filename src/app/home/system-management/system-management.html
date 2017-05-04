@@ -26,11 +26,6 @@
             </div>
            <div class="card-block">
                <div class="card-title"></div> 
-                <search-filter [searchBarPlaceholder]="'Search Services'"
-                                [optionPlaceholder]="'Select Category'" 
-                                [buttonTitle]="'New'"
-                                (buttonClickHandler)="servieFormOpened=true"></search-filter>
-
                 <service-table [showCheckboxes]="false" (editClickedHandler)="service = $event; servieFormOpened=true" #serviceTable></service-table>
            </div>
        </div>
@@ -50,6 +45,9 @@
         </clr-modal>
     </clr-tab-content>
     <clr-tab-content>
-       
+       <category-table></category-table>
+    </clr-tab-content>
+    <clr-tab-content>
+       <unit-table></unit-table>
     </clr-tab-content>
 </clr-tabs>
