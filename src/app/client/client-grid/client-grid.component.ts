@@ -1,36 +1,51 @@
 import { Component } from '@angular/core';
 import {State} from "clarity-angular";
 import { ClientService } from "../client.service";
+import {IClient} from "../../models/client"
+import {StringFilter} from "clarity-angular";
+
+/**
+ * DataGrid filters
+ */
+class ClientIdFilter implements StringFilter<IClient> {
+    accepts(client: IClient, search: string):boolean {
+        return "" + client.id == search;
+    }
+}
+
+class ClientNameFilter implements StringFilter<IClient> {
+    accepts(client: IClient, search: string):boolean {
+        return client.name.toLowerCase().indexOf(search) >= 0;
+    }
+}
+
+class ClientDetailsFilter implements StringFilter<IClient> {
+    accepts(client: IClient, search: string):boolean {
+        return client.details.toLowerCase().indexOf(search) >= 0;
+    }
+}
+
+class ClientTypeFilter implements StringFilter<IClient> {
+    accepts(client: IClient, search: string):boolean {
+        return client.flag.toLowerCase().indexOf(search) >= 0;
+    }
+}
+
 @Component({
     selector: 'client-grid',
     templateUrl: './client-grid.html',
     styleUrls: ['../client.scss']
 })
 export class ClientGridComponent{
-
+    private clientIdFilter = new ClientIdFilter();
+    private clientNameFilter = new ClientNameFilter();
+    private clientDetailsFilter = new ClientDetailsFilter();
+    private clientTypeFilter = new ClientTypeFilter();
     clients: any= [];
     recentClients :any = []
     total: number;
     loading: boolean = true;
     constructor(private _clientService : ClientService){}
-
-    refresh(state: State) {
-       // this.loading = true;
-        // convert the filters from an array to a map,
-        // because that's what our backend-calling service is expecting
-        let filters:{[prop:string]: any} = {};
-        
-        if (state.filters) {
-            for (let filter of state.filters) {
-                let {property, value} = <{property: string, value: string}>filter;
-                filters[property] = value;
-                console.log(filters['undefined'])
-                this.search(filters['undefined'])
-            }
-
-        }
-     
-    }
 
     ngOnInit(){
         this._clientService.get().subscribe(
