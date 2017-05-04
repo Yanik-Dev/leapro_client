@@ -28,6 +28,7 @@
               <div class="select" >
                     <select formControlName="fk_category_id">
                         <option disabled selected>Choose category</option>
+                    <option *ngFor="let category of categories" value="{{category.category_id}}">{{category.category_name}}</option>
                     </select>
                 </div>
             <span class="not-valid" *ngIf="productForm.controls['fk_category_id'].hasError('required') && (productForm.controls['fk_category_id'].dirty || productForm.controls['fk_category_id'].touched)">Required field </span>
@@ -37,6 +38,7 @@
             <div class="select" >
                 <select formControlName="fk_unit_id">
                     <option  disabled selected>Choose category</option>
+                    <option *ngFor="let unit of units" value="{{unit.unit_id}}">{{unit.unit_name}}</option>
                 </select>
             </div>            
              <span class="not-valid" *ngIf="productForm.controls['fk_unit_id'].hasError('required') && (productForm.controls['fk_unit_id'].dirty || productForm.controls['fk_unit_id'].touched)">Required field </span>
@@ -82,7 +84,6 @@
             <label for="details">Tax Type</label>
             <div class="select">
             <select formControlName="tax_type" #taxType>
-              <option value="0" selected>None</option>
               <option value="P">Percentage</option>
               <option value="F">Fixed Amount</option>
            </select>
@@ -96,7 +97,6 @@
             <label for="details">Discount Type</label>
             <div class="select">
             <select formControlName="discount_type" #discountType>
-              <option value="0" selected>None</option>
               <option value="P">Percentage</option>
               <option value="F">Fixed Amount</option>
            </select>

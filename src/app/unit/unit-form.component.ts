@@ -14,6 +14,7 @@ export class UnitFormComponent{
     @Input() opened : boolean = false;
 
     @Output() closed = new EventEmitter();
+    @Output() onFormSave = new EventEmitter();
     /**
      * populate form fields
      */
@@ -24,9 +25,9 @@ export class UnitFormComponent{
      */
     constructor(private _formBuilder: FormBuilder, private _unitService : UnitService){
         this.unitForm = this._formBuilder.group({
-            id : [],
-            name: ['',],
-            code: [''],
+            unit_id : [],
+            unit_name: ['',Validators.compose([Validators.required])],
+            code: ['', Validators.compose([Validators.required])],
             description: ['',],
             
         })
@@ -42,8 +43,8 @@ export class UnitFormComponent{
         if(value){
             this.unitForm.patchValue(
                 {
-                   id : value.id,
-                   name : value.name,
+                   unit_id : value.unit_id,
+                   unit_name : value.unit_name,
                    code : value.code,
                    description: value.description,             
                 }
@@ -57,10 +58,11 @@ export class UnitFormComponent{
      */
     save(){
         if(this.unitForm.valid){
-           if(this.unitForm.controls.id.value > 0){
+           if(this.unitForm.controls.unit_id.value > 0){
                 this._unitService.update(this.unitForm.value).subscribe(res=>{
                     if(res.code == 201){
-                        //creation successful
+                       this.onFormSave.emit(true);
+                        this.error.isTrue = false;
                     }else{
                         this.error = {isTrue: true, message: 'A server error as occur'}
                     }
@@ -68,8 +70,9 @@ export class UnitFormComponent{
            }else{
                 this._unitService.insert(this.unitForm.value).subscribe(res=>{
                     if(res.code == 201){
-                        //creation successful
-                        //clear form
+                       this.onFormSave.emit(true);
+                        this.error.isTrue = false;
+                        this.reset();
                     }
                     if(res.code== 409){
                        this.error = {isTrue: true, message: 'Product already exist'}
@@ -88,7 +91,7 @@ export class UnitFormComponent{
      * activate validations on form fields
      */
     touchFormFields(){
-        this.unitForm.controls.name.markAsTouched({onlySelf: false})
+        this.unitForm.controls.unit_name.markAsTouched({onlySelf: false})
         this.unitForm.controls.code.markAsTouched({onlySelf: false})
         this.unitForm.controls.description.markAsTouched({onlySelf: false})
     }

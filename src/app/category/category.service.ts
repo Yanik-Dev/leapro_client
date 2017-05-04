@@ -12,7 +12,9 @@ export class CategoryService{
 
 
     get(){
-      return this._http.get("http://localhost:4200/app/Category/data.json");
+      return this._http.get(backend.ROUTES.CATEGORY.get).map(
+        res => res.json()
+      );
     }
 
     /**
@@ -30,7 +32,7 @@ export class CategoryService{
      * @param Category 
      */
     update(Category:Category){
-      return this._httpClient.post(backend.ROUTES.CATEGORY.update+Category.id, Category).map(
+      return this._httpClient.post(backend.ROUTES.CATEGORY.update+Category.category_id, Category).map(
         res => res.json()
       )
     }

@@ -8,7 +8,7 @@ import {StringFilter} from "clarity-angular";
  */
 class UnitNameFilter implements StringFilter<Unit> {
     accepts(unit: Unit, search: string):boolean {
-        return unit.name.toLowerCase().indexOf(search) >= 0;
+        return unit.unit_name.toLowerCase().indexOf(search) >= 0;
     }
 }
 
@@ -38,11 +38,16 @@ export class UnitTableComponent implements OnInit{
     constructor(private _unitService : UnitService){
     }
 
+    init(){
+        this._unitService.get().subscribe((data)=>{
+           if(data.data.length > 0){
+             this.units = data.data;
+           }
+       });
+    }
 
     ngOnInit(){
-       this._unitService.get().subscribe((data)=>{
-           this.units = data.json();
-       });
+       this.init()
     }
     /**
      * Refresh the table

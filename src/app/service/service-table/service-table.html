@@ -42,6 +42,6 @@
     </clr-dg-footer>
 </clr-datagrid>
 
- <service-form   [service]="serviceToEdit" 
+ <service-form   [service]="serviceToEdit" (onFormSave) = "init()"
                         [opened]="opened"
                         (closed) = "opened = $event" ></service-form>

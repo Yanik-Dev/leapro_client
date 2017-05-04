@@ -84,7 +84,7 @@ export class ProductAreaTableComponent implements OnInit{
 
     constructor(private _productService: ProductService){}
     
-    ngOnInit(){
+    init(){
         this._productService.get().subscribe(
             (res) => {
                if(res.code != 200){
@@ -99,6 +99,10 @@ export class ProductAreaTableComponent implements OnInit{
                 this.loading= false
             }
         )
+    }
+
+    ngOnInit(){
+        this.init()
     }
 
 

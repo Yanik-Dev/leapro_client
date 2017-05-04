@@ -11,11 +11,13 @@
         <section class="form-block col-sm-12">
             <div class="form-group">
                 <label for="" >Unit Name</label>
-                <input id="" formControlName="name" type="text" placeholder="">
+                <input id="" formControlName="unit_name" type="text" placeholder="">
+                 <span class="not-valid" *ngIf="unitForm.controls['unit_name'].hasError('required') && (unitForm.controls['unit_name'].dirty || unitForm.controls['unit_name'].touched)">Required field </span>
             </div>
             <div class="form-group">
                 <label for="" >Unit Code</label>
                 <input id="" formControlName="code" type="text" placeholder="">
+                 <span class="not-valid" *ngIf="unitForm.controls['code'].hasError('required') && (unitForm.controls['code'].dirty || unitForm.controls['code'].touched)">Required field </span>
             </div>
             <div class="form-group">
                 <label for="formFields_8">Description</label>
@@ -25,7 +27,7 @@
     </form>
    </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-link" (click)="save()">
+        <button type="button" class="btn btn-link" [disabled]="!unitForm" (click)="save()">
             Add
         </button>        
         <button type="button" class="btn btn-danger" (click)="close()">

@@ -7,11 +7,20 @@
 <clr-modal [(clrModalOpen)]="opened" [clrModalSize]="'md'" [clrModalClosable]="false">
     <h3 class="modal-title">Category </h3>
     <div class="modal-body"> 
+    <clr-alert [clrAlertType]="'alert-danger'" [clrAlertClosable]="false" [clrAlertSizeSmall]="true" *ngIf="error.isTrue">
+        <div class="alert-item">
+            <span class="alert-text">
+                {{error.message}}
+            </span>
+        </div>
+    </clr-alert>
     <form [formGroup]="categoryForm" class="compact row">
         <section class="form-block col-sm-12">
             <div class="form-group">
                 <label for="" >Name</label>
-                <input id="" formControlName="name" type="text" placeholder="">
+                <input id="" formControlName="category_name" type="text" placeholder="">
+                   <span class="not-valid" *ngIf="categoryForm.controls['category_name'].hasError('required') && (categoryForm.controls['category_name'].dirty || categoryForm.controls['category_name'].touched)">Required field </span>
+
             </div>
             <div class="form-group">
                 <label for="formFields_8">Description</label>
@@ -21,7 +30,7 @@
     </form>
    </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-link" (click)="save()">
+        <button type="button" class="btn btn-link"  [disabled]="!categoryForm"  (click)="save()">
             Add
         </button>        
         <button type="button" class="btn btn-danger" (click)="close()">

@@ -24,7 +24,7 @@ export class ServicesService{
      * @return Observable
      */
     insert(model: IService) :any{
-       return this._httpClient.post(Backend.ROUTES.PRODUCT.insert, model)
+       return this._httpClient.post(Backend.ROUTES.SERVICE.insert, model)
                   .map(value=> value.json())
                   .catch((error)=> error.json().error)
     }
@@ -41,6 +41,7 @@ export class ServicesService{
                    .map(value=> value.json())
                    .catch((error)=> error.json().error)
     }
+
     /**
      * query database for search results
      * @param name

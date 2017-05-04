@@ -1,13 +1,19 @@
-import { Component, Input, Output, EventEmitter, SimpleChange } from '@angular/core';
+import { Component, Input, Output, EventEmitter, SimpleChange, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IProduct } from '../../models/product';
 import { ProductService } from '../product.service';
+import { Unit } from "app/models/unit";
+import { Category } from "app/models/category";
+import { UnitService } from "app/unit/unit.service";
+import { CategoryService } from "app/category/category.service";
 
 @Component({
     selector: 'product-form',
     templateUrl: 'product-form.html'
 })
-export class ProductFormComponent{
+export class ProductFormComponent implements OnInit{
+    private units : Array<Unit>;
+    private categories : Array<Category>;
     productForm : FormGroup;
     error : any = {isTrue: false, message:''} 
     /**
@@ -29,7 +35,11 @@ export class ProductFormComponent{
      */
     @Output() onAddUnitButtonCliked  = new EventEmitter();
 
-    constructor(private _formBuilder : FormBuilder, private _productService : ProductService){
+    constructor(private _formBuilder : FormBuilder, 
+                private _productService : ProductService,
+                private _unitService : UnitService,
+                private _categoryService : CategoryService
+                ){
         this.productForm = this._formBuilder.group({
             id : [],
             name : [, Validators.compose([Validators.required, Validators.maxLength(20)])],
@@ -38,9 +48,9 @@ export class ProductFormComponent{
             quantity: [,],
             unit_cost: [0, Validators.compose([Validators.required])],
             discount: [0,],
-            discount_type: [,],
+            discount_type: ["F",],
             tax: [0,],
-            tax_type: [,],
+            tax_type: ["F",],
             selling_cost: [0, Validators.compose([Validators.required])],
             application: [, Validators.compose([Validators.maxLength(20)])],
             dilution: [, Validators.compose([Validators.maxLength(20)])],
@@ -50,6 +60,20 @@ export class ProductFormComponent{
        
     }
     
+    ngOnInit(){
+       this._unitService.get().subscribe((data)=>{
+           if(data.data.length > 0){
+             this.units = data.data;
+           }
+       });
+
+        this._categoryService.get().subscribe((data)=>{
+           if(data.data.length > 0){
+             this.categories = data.data;
+           }
+       });
+    }
+
     ngOnChanges(change : SimpleChange){
         let value = (change['product'])?<IProduct> change['product'].currentValue: this.product;
         if(value){
@@ -84,6 +108,8 @@ export class ProductFormComponent{
                 this._productService.update(this.productForm.value).subscribe(res=>{
                     if(res.code == 201){
                         //creation successful
+                        this.onFormSave.emit(true);
+                        this.error.isTrue = false;
                     }else{
                         this.error = {isTrue: true, message: 'A server error as occur'}
                     }
@@ -91,8 +117,9 @@ export class ProductFormComponent{
            }else{
                 this._productService.insert(this.productForm.value).subscribe(res=>{
                     if(res.code == 201){
-                        //creation successful
-                        //clear form
+                        this.onFormSave.emit(true);
+                        this.error.isTrue = false;
+                        this.reset();
                     }
                     if(res.code== 409){
                        this.error = {isTrue: true, message: 'Product already exist'}

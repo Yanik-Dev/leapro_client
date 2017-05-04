@@ -14,6 +14,9 @@ export class CategoryFormComponent{
     @Input() opened : boolean = false;
 
     @Output() closed = new EventEmitter();
+
+    
+    @Output() onFormSave = new EventEmitter();
     /**
      * populate form fields
      */
@@ -24,9 +27,8 @@ export class CategoryFormComponent{
      */
     constructor(private _formBuilder: FormBuilder, private _categoryService : CategoryService){
         this.categoryForm = this._formBuilder.group({
-            id : [],
-            name: ['',],
-            code: [''],
+            category_id : [],
+            category_name: ['', Validators.compose([Validators.required])],
             description: ['',],
             
         })
@@ -42,8 +44,8 @@ export class CategoryFormComponent{
         if(value){
             this.categoryForm.patchValue(
                 {
-                   id : value.id,
-                   name : value.name,
+                   category_id : value.category_id,
+                   category_name : value.category_name,
                    description: value.description,             
                 }
             )
@@ -56,10 +58,11 @@ export class CategoryFormComponent{
      */
     save(){
         if(this.categoryForm.valid){
-           if(this.categoryForm.controls.id.value > 0){
+           if(this.categoryForm.controls.category_id.value > 0){
                 this._categoryService.update(this.categoryForm.value).subscribe(res=>{
                     if(res.code == 201){
-                        //creation successful
+                        this.onFormSave.emit(true);
+                        this.error.isTrue = false;
                     }else{
                         this.error = {isTrue: true, message: 'A server error as occur'}
                     }
@@ -67,11 +70,12 @@ export class CategoryFormComponent{
            }else{
                 this._categoryService.insert(this.categoryForm.value).subscribe(res=>{
                     if(res.code == 201){
-                        //creation successful
-                        //clear form
+                        this.onFormSave.emit(true);
+                        this.error.isTrue = false;
+                        this.reset();
                     }
                     if(res.code== 409){
-                       this.error = {isTrue: true, message: 'Product already exist'}
+                       this.error = {isTrue: true, message: 'Category already exist'}
                     }else{
                         this.error = {isTrue: true, message: 'A server error as occur'}
                     }
@@ -87,8 +91,7 @@ export class CategoryFormComponent{
      * activate validations on form fields
      */
     touchFormFields(){
-        this.categoryForm.controls.name.markAsTouched({onlySelf: false})
-        this.categoryForm.controls.code.markAsTouched({onlySelf: false})
+        this.categoryForm.controls.category_name.markAsTouched({onlySelf: false})
         this.categoryForm.controls.description.markAsTouched({onlySelf: false})
     }
 

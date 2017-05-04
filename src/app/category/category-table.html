@@ -8,7 +8,7 @@
     <clr-dg-column ><clr-icon shape="add" size="24" (click)="opened = true;"></clr-icon></clr-dg-column>
      <clr-dg-placeholder>We couldn't find any services!</clr-dg-placeholder>
     <clr-dg-row *clrDgItems="let record of categories; let i = index">
-        <clr-dg-cell> {{record.name}}</clr-dg-cell>
+        <clr-dg-cell> {{record.category_name}}</clr-dg-cell>
         <clr-dg-cell >{{record.description}} </clr-dg-cell>
         <clr-dg-cell>
            <clr-icon shape="edit" size="16" (click)="editClicked(record); opened = true;"></clr-icon>
@@ -20,7 +20,7 @@
     </clr-dg-footer>
 </clr-datagrid>
 
- <category-form   [category]="categoryToEdit" 
+ <category-form   [category]="categoryToEdit" (onFormSave)="init()"
                         [opened]="opened"
                         (closed) = "opened = $event" ></category-form>
 

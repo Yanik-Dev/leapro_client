@@ -1,10 +1,10 @@
 <!-- unit table -->
 <clr-datagrid  [clrDgLoading]="loading" >
-    <clr-dg-column [clrDgField]="'name'">
+    <clr-dg-column [clrDgField]="'code'">
         Unit Code
        <clr-dg-string-filter [clrDgStringFilter]="unitCodeFilter"></clr-dg-string-filter>
     </clr-dg-column>
-    <clr-dg-column [clrDgField]="'category'" >
+    <clr-dg-column [clrDgField]="'unit_name'" >
         Name
        <clr-dg-string-filter [clrDgStringFilter]="unitNameFilter"></clr-dg-string-filter>
     </clr-dg-column>
@@ -13,7 +13,7 @@
      <clr-dg-placeholder>We couldn't find any services!</clr-dg-placeholder>
     <clr-dg-row *clrDgItems="let record of units; let i = index">
         <clr-dg-cell>{{record.code}}</clr-dg-cell>
-        <clr-dg-cell> {{record.name}}</clr-dg-cell>
+        <clr-dg-cell> {{record.unit_name}}</clr-dg-cell>
         <clr-dg-cell >{{record.description}} </clr-dg-cell>
         <clr-dg-cell>
            <clr-icon shape="edit" size="16" (click)="editClicked(record); opened = true;"></clr-icon>
@@ -26,6 +26,7 @@
 </clr-datagrid>
 
  <unit-form   [unit]="unitToEdit" 
+                        (onFormSave) = "init()"
                         [opened]="opened"
                         (closed) = "opened = $event" ></unit-form>
 

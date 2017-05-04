@@ -8,18 +8,28 @@
 <clr-modal [(clrModalOpen)]="opened" [clrModalSize]="'xl'" [clrModalClosable]="false">
     <h3 class="modal-title">Product </h3>
     <div class="modal-body"> 
+        <clr-alert [clrAlertType]="'alert-danger'" [clrAlertClosable]="false" [clrAlertSizeSmall]="true" *ngIf="error.isTrue">
+            <div class="alert-item">
+                <span class="alert-text">
+                    {{error.message}}
+                </span>
+            </div>
+        </clr-alert>
         <form [formGroup]="serviceForm" class="compact row">
             <section class="form-block col-sm-6">
                 <div class="form-group">
                     <label for="">Service Name</label>
                     <input id=""  type="text" placeholder="" formControlName="name">
+                    <span class="not-valid" *ngIf="serviceForm.controls['name'].hasError('required') && (serviceForm.controls['name'].dirty || serviceForm.controls['name'].touched)">Required field </span>
                 </div>
                 <div class="form-group">
                     <label for="details">Category</label>
                     <div class="select">
                         <select formControlName="fk_category_id">
                             <option value="" disabled selected>Choose category</option>
+                             <option *ngFor="let category of categories" value="{{category.category_id}}">{{category.category_name}}</option>
                         </select>
+                         <span class="not-valid" *ngIf="serviceForm.controls['fk_category_id'].hasError('required') && (serviceForm.controls['fk_category_id'].dirty || serviceForm.controls['fk_category_id'].touched)">Required field </span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -29,10 +39,13 @@
                 <div class="form-group">
                     <label for="">Man Hours</label>
                     <input id=""  type="number" formControlName="man_hours" min="1" max="24">
+                    <span class="not-valid" *ngIf="serviceForm.controls['man_hours'].hasError('required') && (serviceForm.controls['man_hours'].dirty || serviceForm.controls['man_hours'].touched)">Required field </span>
+
                 </div>
                 <div class="form-group">
                     <label for="">Unit Charge</label>
                     <input id=""  type="number"formControlName="unit_charge" min="0">
+                         <span class="not-valid" *ngIf="serviceForm.controls['unit_charge'].hasError('required') && (serviceForm.controls['unit_charge'].dirty || serviceForm.controls['unit_charge'].touched)">Required field </span>
                 </div>
             </section>
             <section class="form-block  col-sm-6">
@@ -40,7 +53,6 @@
                     <label for="details">Tax Type</label>
                     <div class="select">
                     <select formControlName="tax_type" #taxType>
-                    <option value="0" selected>None</option>
                     <option value="P">Percentage</option>
                     <option value="F">Fixed Amount</option>
                 </select>
@@ -54,7 +66,6 @@
                     <label for="details">Discount Type</label>
                     <div class="select">
                     <select formControlName="discount_type" #discountType>
-                    <option value="0" selected>None</option>
                     <option value="P">Percentage</option>
                     <option value="F">Fixed Amount</option>
                 </select>

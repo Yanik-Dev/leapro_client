@@ -2,6 +2,6 @@
  * defines Category Model
  */
 export class Category{
-    constructor(public id : number =0, public name : String="", public description:String=""){}
+    constructor(public category_id : number =0, public category_name : String="", public description:String=""){}
 
 }

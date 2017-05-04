@@ -8,7 +8,7 @@ import {StringFilter} from "clarity-angular";
  */
 class CategoryNameFilter implements StringFilter<Category> {
     accepts(Category: Category, search: string):boolean {
-        return Category.name.toLowerCase().indexOf(search) >= 0;
+        return Category.category_name.toLowerCase().indexOf(search) >= 0;
     }
 }
 
@@ -32,10 +32,15 @@ export class CategoryTableComponent implements OnInit{
     }
 
 
-    ngOnInit(){
+    init(){
        this._categoryService.get().subscribe((data)=>{
-           this.categories = data.json();
+           if(data.data.length > 0){
+             this.categories = data.data;
+           }
        });
+    }
+    ngOnInit(){
+      this.init();
     }
     /**
      * Refresh the table
@@ -49,7 +54,7 @@ export class CategoryTableComponent implements OnInit{
      */
     search(query: any){
         this._categoryService.get().subscribe((data)=>{
-           this.categories = data.json();
+           this.categories = data.data;
        });
     }
     

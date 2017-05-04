@@ -12,7 +12,9 @@ export class UnitService{
 
 
     get(){
-      return this._http.get("http://localhost:4200/app/unit/data.json");
+      return this._http.get(backend.ROUTES.UNIT.get).map(
+        res => res.json()
+      );
     }
 
     /**
@@ -30,7 +32,7 @@ export class UnitService{
      * @param unit 
      */
     update(unit:Unit){
-      return this._httpClient.post(backend.ROUTES.UNIT.update+unit.id, unit).map(
+      return this._httpClient.post(backend.ROUTES.UNIT.update+unit.unit_id, unit).map(
         res => res.json()
       )
     }
