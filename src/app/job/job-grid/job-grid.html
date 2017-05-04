@@ -1,18 +1,32 @@
 
-<clr-datagrid  (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading" >
-    <clr-dg-column [clrDgField]="'id'">id</clr-dg-column>
-    <clr-dg-column >Summary</clr-dg-column>
-    <clr-dg-column >Received Date</clr-dg-column>
+<clr-datagrid  [clrDgLoading]="loading" >
+    <clr-dg-column [clrDgField]="'id'">
+        id
+    <clr-dg-string-filter [clrDgStringFilter]="jobIdFilter"></clr-dg-string-filter>
+    </clr-dg-column>
+    <clr-dg-column >
+        Summary
+        
+    <clr-dg-string-filter [clrDgStringFilter]="jobSummaryFilter"></clr-dg-string-filter>
+    </clr-dg-column>
+    <clr-dg-column >
+        Received Date
+        <clr-dg-string-filter [clrDgStringFilter]="jobReceivedDateFilter"></clr-dg-string-filter>
+    </clr-dg-column>
     <clr-dg-column >Expiry Date</clr-dg-column>
-    <clr-dg-column >Status</clr-dg-column>
+    <clr-dg-column >
+        Status
+        <clr-dg-string-filter [clrDgStringFilter]="jobStatusFilter"></clr-dg-string-filter>
+    </clr-dg-column>
     <clr-dg-column ></clr-dg-column>
      <clr-dg-placeholder>We couldn't find any jobs!</clr-dg-placeholder>
+    
     <clr-dg-row *clrDgItems="let job of records; let i = index">
         <clr-dg-cell>{{job.id}}</clr-dg-cell>
         <clr-dg-cell>{{job.summary}}</clr-dg-cell>
         <clr-dg-cell>{{job.received_date | date}}</clr-dg-cell>
         <clr-dg-cell>{{job.expiry_date| date}}</clr-dg-cell>
-         <clr-dg-cell>{{job.status}}</clr-dg-cell>
+        <clr-dg-cell>{{job.status}}</clr-dg-cell>
          <clr-dg-cell>
             <clr-icon (click)="editEditClicked()" *ngIf="showEditColumn" shape="edit" class="is-highlight"></clr-icon>
             <clr-icon (click)="editViewClicked()" *ngIf="showViewColumn" class="is-success" shape="caret right"></clr-icon>

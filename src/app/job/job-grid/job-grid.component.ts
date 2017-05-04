@@ -2,13 +2,44 @@ import { Component, Input, Output, EventEmitter, SimpleChange } from '@angular/c
 import { State } from "clarity-angular";
 import { JobService } from "app/job/job.service";
 import { IJob } from "app/models/job";
+import {StringFilter} from "clarity-angular";
+
+/**
+ * DataGrid filters
+ */
+class JobIdFilter implements StringFilter<IJob> {
+    accepts(job: IJob, search: string):boolean {
+        return "" + job.id == search;
+    }
+}
+
+class JobSummaryFilter implements StringFilter<IJob> {
+    accepts(job: IJob, search: string):boolean {
+        return job.summary.toLowerCase().indexOf(search) >= 0;
+    }
+}
+
+class JobReceivedDateFilter implements StringFilter<IJob> {
+    accepts(job: IJob, search: string):boolean {
+        return job.received_date.toLowerCase().indexOf(search) >= 0;
+    }
+}
+
+class JobStatusFilter implements StringFilter<IJob> {
+    accepts(job: IJob, search: string):boolean {
+        return job.status.toLowerCase().indexOf(search) >= 0;
+    }
+}
 
 @Component({
     selector: 'job-grid',
     templateUrl: 'job-grid.html'
 })
 export class JobGridComponent{
-
+    private jobIdFilter  =new JobIdFilter();
+    private jobSummaryFilter  =new JobSummaryFilter();
+    private jobReceivedDateFilter = new JobReceivedDateFilter();
+    private jobStatusFilter = new JobStatusFilter();
     records : Array<any>;
     /**
      * set the type of job to display { Estimate, Job Order}
@@ -45,9 +76,7 @@ export class JobGridComponent{
     }
 
     refresh(state: State) {
-       // this.loading = true;
-        // convert the filters from an array to a map,
-        // because that's what our backend-calling service is expecting
+        
         let filters:{[prop:string]: any} = {};
         
         if (state.filters) {

@@ -12,4 +12,5 @@ export interface IJob{
     products? : Array<IProductArea>,
     services? : Array<IService>
     notes? : Array<INote>   
+    status? : String
 }
